@@ -14,7 +14,7 @@
 <link rel="icon" href="img/icone.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/fonts.css?v=1">
-<link rel="stylesheet" href="css/site.css?v=10">
+<link rel="stylesheet" href="css/site.css?v=11">
 </head>
 <body>
 <header>
@@ -37,16 +37,25 @@
 <section class="band hero" id="inicio" data-trena="Obra">
   <div class="wrap">
     <div class="hero-top">
-      <h1>Da fundação ao acabamento, tudo sai daqui da Dom Pedro II.</h1>
+      <div class="h-main">
+        <span class="cred-pill"><svg viewBox="0 0 48 48" width="22" height="22" aria-hidden="true"><path d="M4 23 24 6l20 17" fill="none" stroke="#e0262c" stroke-width="5" stroke-linecap="square"/><rect x="9" y="6" width="6" height="9" fill="#e0262c"/><path d="M10 22v22" stroke="#e0262c" stroke-width="5"/><g fill="currentColor"><rect x="23" y="24" width="7.5" height="7.5"/><rect x="32.5" y="24" width="7.5" height="7.5"/><rect x="23" y="33.5" width="7.5" height="7.5"/><rect x="32.5" y="33.5" width="7.5" height="7.5"/></g></svg>Desde 2003 <i></i> Integrante da Rede Construnião</span>
+        <h1>Construir bem, para construir sempre.</h1>
+      </div>
       <div class="side">
-        <p class="lead">Loja de materiais de construção e construtora em Serra Alta e Saltinho há 23 anos. A gente vende o material, fabrica a esquadria e, se você quiser, constrói a casa.</p>
-        <div class="ctas"><a class="btn solid" href="#calculadora">Calcular minha obra</a><a class="btn" href="#construtora">Quero construir</a></div>
+        <p class="lead">Materiais de construção, fabricação própria de esquadrias e uma construtora com engenharia integrada. Tudo na mesma empresa, com lojas em Serra Alta e Saltinho.</p>
+        <div class="ctas"><a class="btn solid" href="#construtora">Planejar minha obra</a><a class="btn" href="#produtos">Ver produtos</a></div>
       </div>
     </div>
+    <div class="trust" aria-label="Números da Construbem">
+      <div><b>23</b><span>anos no Oeste catarinense</span></div>
+      <div><b>2</b><span>lojas: Serra Alta e Saltinho</span></div>
+      <div><b>12</b><span>seções de produtos</span></div>
+      <div><b>3</b><span>frentes: loja, fábrica e construtora</span></div>
+    </div>
     <div class="site" id="obra">
-      <div class="stage-pic"><span class="tag" id="stTag">Etapa 7 de 7</span><svg id="house" viewBox="0 0 600 460" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Casa sendo construída etapa por etapa"></svg></div>
+      <div class="stage-pic"><div class="hud"><span class="live"><i></i>Simulador de obra</span><span class="tag" id="stTag">Etapa 7 de 7</span></div><div class="hud-b"><span id="stPct">100% concluído</span><span class="bar"><i id="stBar"></i></span></div><svg id="house" viewBox="0 0 600 460" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Casa sendo construída etapa por etapa"></svg></div>
       <div class="stage-ui">
-        <h3 id="stName" style="font-size:28px;font-stretch:112%;font-weight:900">Acabamento</h3>
+        <h3 id="stName" style="font-size:28px;font-stretch:104%;font-weight:800">Acabamento</h3>
         <p id="stDesc"></p>
         <div class="chips" id="stItems"></div>
         <div id="paint" hidden><div class="lbl" style="margin-bottom:8px">Cor da fachada <span id="paintName" style="color:var(--mute);font-weight:600"></span></div><div class="swatches" id="sw"></div></div>
@@ -58,7 +67,6 @@
         <div class="steps scroll" id="steps"></div>
       </div>
     </div>
-    <div class="facts" style="margin-top:20px"><span>23 anos construindo sonhos</span><span>Lojas em Serra Alta e Saltinho</span><span>Engenharia integrada</span><span>Esquadrias e artefatos de cimento de fabricação própria</span><span>Entrega com frota própria</span><span>Rede Construnião</span></div>
   </div>
 </section>
 
@@ -131,7 +139,7 @@
   <div class="wrap">
     <div class="rowh"><div><h2>Os mais procurados nas lojas.</h2><p class="lead" style="margin-top:12px">O que mais sai em Serra Alta e Saltinho, segundo as ofertas da própria Construbem.</p></div><a class="btn" href="https://www.instagram.com/construbemsa/" target="_blank" rel="noopener">Ver no Instagram</a></div>
     <div class="tops" id="tops"></div>
-    <h3 style="margin-top:44px;font-size:clamp(22px,2.6vw,28px);font-stretch:112%;font-weight:900">Na prateleira agora</h3>
+    <h3 style="margin-top:44px;font-size:clamp(22px,2.6vw,28px);font-stretch:104%;font-weight:800">Na prateleira agora</h3>
     <div class="gal" id="gal"></div>
   </div>
 </section>
@@ -201,7 +209,7 @@
         <div class="posts" aria-hidden="true"><i></i><i></i></div>
       </div>
     </div>
-    <h3 style="margin-top:56px;font-size:clamp(24px,3vw,32px);font-stretch:112%;font-weight:900">Como funciona</h3>
+    <h3 style="margin-top:56px;font-size:clamp(24px,3vw,32px);font-stretch:104%;font-weight:800">Como funciona</h3>
     <div class="flow" id="flow"></div>
     <div class="svc" id="svc">
       <button data-t="0"><h3>Construção e reforma</h3><p>Casas, ampliações e reformas, com engenharia e material da própria loja.</p><em>Montar meu pedido →</em></button>
@@ -278,7 +286,7 @@
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT">
   <div class="bg" id="shBg"></div>
   <div class="pn">
-    <div class="h"><h3 id="shT" style="font-size:22px;font-stretch:112%;font-weight:900">Lista da obra</h3><button id="shX" aria-label="Fechar">×</button></div>
+    <div class="h"><h3 id="shT" style="font-size:22px;font-stretch:104%;font-weight:800">Lista da obra</h3><button id="shX" aria-label="Fechar">×</button></div>
     <div class="items" id="items"></div>
     <div class="f">
       <div class="row"><input id="lNome" placeholder="Seu nome" aria-label="Seu nome"><input id="lCid" placeholder="Cidade" aria-label="Cidade"></div>
@@ -291,6 +299,6 @@
 <div class="toast" id="toast" role="status"></div>
 
 <script src="js/dados.js?v=7"></script>
-<script src="js/site.js?v=8"></script>
+<script src="js/site.js?v=9"></script>
 </body>
 </html>
