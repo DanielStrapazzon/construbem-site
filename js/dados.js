@@ -95,3 +95,34 @@ const catIcons=[
  '<svg viewBox="0 0 48 48"><rect x="12" y="4" width="24" height="40" rx="2" fill="#fff"/><rect x="16" y="8" width="16" height="14" fill="#b9d7e2"/><circle cx="31" cy="28" r="2.5" fill="#f2b632"/></svg>',
  '<svg viewBox="0 0 48 48"><path d="M4 26h40v4a12 12 0 0 1-12 12H16A12 12 0 0 1 4 30z" fill="#fff"/><path d="M22 26V12h14v6" fill="none" stroke="#f2b632" stroke-width="5" stroke-linecap="round"/></svg>'
 ];
+
+/* Entrega: modos de receber o material e suas etapas [título, detalhe, ícone] */
+const ico={
+ msg:'<svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" fill="#f2b632"/></svg>',
+ box:'<svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4v9l-9 4-9-4z" fill="#c2452a"/><path d="M3 8l9 4 9-4M12 12v9" stroke="#f4efe7" stroke-width="1.5" fill="none"/></svg>',
+ truck:'<svg viewBox="0 0 24 24"><rect x="2" y="7" width="12" height="9" fill="#c2452a"/><path d="M14 10h4l3 3v3h-7z" fill="#f2b632"/><circle cx="6" cy="18" r="2" fill="#f4efe7"/><circle cx="17" cy="18" r="2" fill="#f4efe7"/></svg>',
+ road:'<svg viewBox="0 0 24 24"><path d="M8 3 4 21M16 3l4 18" stroke="#f4efe7" stroke-width="2"/><path d="M12 4v3M12 10v3M12 16v3" stroke="#f2b632" stroke-width="2"/></svg>',
+ pin:'<svg viewBox="0 0 24 24"><path d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z" fill="#f2b632"/><circle cx="12" cy="10" r="3" fill="#1a1714"/></svg>',
+ store:'<svg viewBox="0 0 24 24"><path d="M3 9l2-5h14l2 5z" fill="#f2b632"/><rect x="4" y="9" width="16" height="11" fill="#c2452a"/><rect x="10" y="13" width="4" height="7" fill="#f4efe7"/></svg>',
+ hand:'<svg viewBox="0 0 24 24"><rect x="7" y="4" width="10" height="8" fill="#c2452a"/><path d="M3 15h5l4 2h6l3-3v6H3z" fill="#f2b632"/></svg>',
+ cart:'<svg viewBox="0 0 24 24"><path d="M2 4h3l3 11h11l2-8H7" fill="none" stroke="#f2b632" stroke-width="2"/><circle cx="9" cy="19" r="2" fill="#f4efe7"/><circle cx="17" cy="19" r="2" fill="#f4efe7"/></svg>',
+ check:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#c2452a"/><path d="m8 12 3 3 5-6" stroke="#f4efe7" stroke-width="2.2" fill="none"/></svg>'
+};
+const modos=[
+ {n:'Entrega na obra',ic:'truck',t:'Material descarregado no seu canteiro.',d:'A frota própria da Construbem leva cimento, blocos, telhas e madeira até a obra. Consulte frete e prazo para a sua cidade.',cta:'Consultar frete',href:'wa:Olá, Construbem! Quero saber o frete para entregar material na minha obra.',
+  st:[['Pedido','Lista ou orçamento no WhatsApp','msg'],['Separação','Material conferido na loja','box'],['Carregamento','No caminhão da Construbem','truck'],['A caminho','Rota até a sua cidade','road'],['Na obra','Descarregado no canteiro','pin']]},
+ {n:'Retirar na loja',ic:'store',t:'Separado e esperando no balcão.',d:'Mande a lista, a gente separa e avisa quando estiver pronto. Você retira na Av. Dom Pedro II, 740.',cta:'Pedir separação',href:'wa:Olá, Construbem! Quero pedir material para retirar na loja.',
+  st:[['Pedido','Lista no WhatsApp ou no balcão','msg'],['Separação','Material conferido na loja','box'],['Pronto','Avisamos que pode buscar','check'],['Retirada','Av. Dom Pedro II, 740','hand']]},
+ {n:'Comprar online',ic:'cart',t:'Compra pelo site, retirada grátis.',d:'Na loja online lojaconstrubem.com.br você escolhe, paga e retira sem custo na loja.',cta:'Abrir loja online',href:'https://lojaconstrubem.com.br/',
+  st:[['Compra','Pelo site lojaconstrubem.com.br','cart'],['Confirmação','Pedido confirmado','check'],['Separação','Material conferido na loja','box'],['Retirada grátis','Na loja da Dom Pedro II','store']]}
+];
+/* Interesses para o encarte de ofertas */
+const interesses=['Cimento e básicos','Tijolos e blocos','Telhas e isolamento','Portas e janelas','Louças e metais','Tintas','Ferramentas','Elétrica e hidráulica'];
+
+/* Vitrine: fotos reais do Instagram @construbemsa (pasta img/vitrine) */
+const vitrine=[
+ {f:'ferramentas.jpg',w:360,h:640,tag:'Equipamentos',t:'Ferramentas elétricas',d:'Parafusadeiras, serras e lixadeiras na pronta-entrega',alt:'Prateleiras com parafusadeiras e ferramentas elétricas na loja Construbem'},
+ {f:'cadeiras-praia.jpg',w:640,h:640,tag:'Linha verão',t:'Cadeiras e caixas térmicas',d:'Para a praia, o rio e o pátio',alt:'Cadeiras de praia rosa e caixa térmica na areia'},
+ {f:'varal.jpg',w:612,h:612,tag:'Utilidades',t:'Para o dia a dia da casa',d:'Varais, organizadores e utilidades',alt:'Varal de chão aberto em uma lavanderia clara'},
+ {f:'loja-cadeiras.jpg',w:361,h:640,tag:'Na loja',t:'Vitrine de verão',d:'Cadeiras, guarda-sóis e boias à pronta-entrega',alt:'Loja Construbem com cadeiras de praia, caixas térmicas e boias expostas'}
+];

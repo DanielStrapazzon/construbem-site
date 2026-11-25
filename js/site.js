@@ -107,6 +107,11 @@ $('q').addEventListener('input',e=>{query=norm(e.target.value.trim());const hits
 });
 renderWall();
 
+/* ---------- vitrine ---------- */
+$('gal').innerHTML=vitrine.map(v=>`<figure><img src="img/vitrine/${esc(v.f)}" alt="${esc(v.alt)}" loading="lazy" width="${v.w}" height="${v.h}"><figcaption><span>${esc(v.tag)}</span><b>${esc(v.t)}</b><small>${esc(v.d)}</small></figcaption></figure>`).join('');
+$('gal').insertAdjacentHTML('beforeend',`<figure class="ig"><div><div class="n">2,5 mil</div><p>pessoas acompanham as novidades, ofertas e obras no Instagram.</p></div><a class="btn" href="https://www.instagram.com/construbemsa/" target="_blank" rel="noopener">@construbemsa</a></figure>`);
+$('gal').addEventListener('click',e=>{const f=e.target.closest('figure:not(.ig)');if(!f)return;const v=vitrine[[...$('gal').querySelectorAll('figure:not(.ig)')].indexOf(f)];window.open(wa('Olá, Construbem! Vi no site: '+v.t+'. Pode me passar preço e disponibilidade?'),'_blank','noopener')});
+
 /* ---------- fases: escolha sua situação ---------- */
 const go=h=>{const el=document.querySelector(h);if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
 const acts={
@@ -228,7 +233,33 @@ let fs=0;
 function renderFlow(){$('flow').innerHTML=steps.map((s,i)=>`<button type="button" data-i="${i}" aria-current="${i===fs}" class="${i<fs?'done':''}">${i===0?'<span class="here">Você começa aqui</span>':''}<h3>${esc(s.n)}</h3><p>${esc(s.d)}</p></button>`).join('')}
 $('flow').addEventListener('click',e=>{const b=e.target.closest('button');if(b){fs=+b.dataset.i;renderFlow()}});
 renderFlow();
-$('svc').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.t){setTipo(+b.dataset.t);$('plan').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}else if(b.dataset.go)location.hash=b.dataset.go;else if(b.dataset.add)add(b.dataset.add)});
+$('svc').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.t){setTipo(+b.dataset.t);$('plan').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}else if(b.dataset.go)go(b.dataset.go);else if(b.dataset.add)add(b.dataset.add)});
+
+/* ---------- entrega: rastreio ---------- */
+let md=0,tick=null,played=false;
+$('modes').innerHTML=modos.map((m,i)=>`<button role="tab" data-i="${i}">${ico[m.ic]}${esc(m.n)}</button>`).join('');
+function setStation(k){const n=modos[md].st.length,r=$('route');
+  r.querySelectorAll('.stn').forEach((s,i)=>{s.classList.toggle('on',i<=k);s.classList.toggle('now',i===k)});
+  const f=n>1?k/(n-1):0;r.querySelector('.bar').style.width=`calc((100% - 100%/${n})*${f})`;r.querySelector('.veh').style.left=`calc(50%/${n} + (100% - 100%/${n})*${f})`}
+function play(){clearInterval(tick);const n=modos[md].st.length;if(reduce){setStation(n-1);return}let k=0;setStation(0);tick=setInterval(()=>{k++;setStation(k);if(k>=n-1)clearInterval(tick)},850)}
+function renderMode(){const m=modos[md],r=$('route');
+  $('modes').querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-selected',i===md));
+  r.style.setProperty('--n',m.st.length);
+  r.innerHTML='<span class="bar"></span><svg class="veh" viewBox="0 0 64 40" aria-hidden="true"><rect x="2" y="6" width="38" height="24" rx="2" fill="#c2452a"/><path d="M40 12h12l10 10v8H40z" fill="#f2b632"/><path d="M44 15h7l6 7H44z" fill="#b9d7e2"/><circle cx="14" cy="32" r="6" fill="#1a1714" stroke="#f4efe7" stroke-width="2"/><circle cx="50" cy="32" r="6" fill="#1a1714" stroke="#f4efe7" stroke-width="2"/></svg>'+m.st.map(s=>`<div class="stn"><span class="dot">${ico[s[2]]}</span><b>${esc(s[0])}</b><small>${esc(s[1])}</small></div>`).join('');
+  if(m.ic!=='truck')r.querySelector('.veh').innerHTML='<rect x="14" y="6" width="36" height="28" rx="4" fill="#f2b632"/><path d="M14 14h36" stroke="#2a2110" stroke-width="2"/><rect x="26" y="20" width="12" height="8" fill="#c2452a"/>';
+  $('mT').textContent=m.t;$('mD').textContent=m.d;const c=$('mCta');c.textContent=m.cta;c.href=m.href.startsWith('wa:')?wa(m.href.slice(3)):m.href;
+  setStation(0);if(played)play();
+}
+$('modes').addEventListener('click',e=>{const b=e.target.closest('button');if(b){md=+b.dataset.i;renderMode()}});
+$('replay').onclick=play;
+renderMode();
+const ioR=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)&&!played){played=true;play()}},{threshold:.45});ioR.observe($('route'));
+/* ofertas por interesse */
+const picked=new Set(['Cimento e básicos','Tintas']);
+function renderInts(){$('ints').innerHTML=interesses.map(x=>`<button data-v="${esc(x)}" aria-pressed="${picked.has(x)}">${esc(x)}</button>`).join('');
+  const l=[...picked];$('offWa').href=wa('Olá, Construbem! Quero receber o encarte de ofertas do mês'+(l.length?'. Tenho interesse em: '+l.join(', ')+'.':'.'));$('offWa').textContent=l.length?`Receber ofertas (${l.length})`:'Receber o encarte'}
+$('ints').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const v=b.dataset.v;picked.has(v)?picked.delete(v):picked.add(v);renderInts()});
+renderInts();
 
 /* ---------- chat ---------- */
 $('qs').innerHTML=faq.map((f,i)=>`<button data-i="${i}">${esc(f[0])}</button>`).join('');
