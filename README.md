@@ -12,5 +12,3 @@ Página única em HTML, CSS e JavaScript puro (sem build). Abra `index.html` no 
 - Construtora, ofertas, entrega, perguntas e contato
 - Lista da obra enviada pelo WhatsApp
 
-## Publicar no GitHub Pages
-Settings → Pages → Branch `main` / pasta `/ (root)`.
