@@ -39,7 +39,7 @@ nav.top a:hover{background:var(--conc)}
 .hd .btn{min-height:42px;flex:none}
 .tape{height:6px;background:repeating-linear-gradient(90deg,#c99a1e 0 1px,transparent 1px 10px),var(--yel);position:relative}
 .tape i{position:absolute;inset:0 auto 0 0;background:var(--brick);width:0}
-@media(max-width:1240px){nav.top{display:none}.hd .btn{margin-left:auto}}
+@media(max-width:1380px){nav.top{display:none}.hd .btn{margin-left:auto}}
 @media(max-width:420px){.hd .btn span{display:none}}
 .rail{position:fixed;left:14px;top:110px;bottom:24px;width:30px;z-index:20;display:none}
 .rail .t{position:absolute;inset:0;border-radius:4px;background:repeating-linear-gradient(180deg,#a37a12 0 2px,transparent 2px 12px),repeating-linear-gradient(180deg,#a37a12 0 2px,transparent 2px 60px),var(--yel);background-size:10px 100%,18px 100%,100% 100%;background-repeat:no-repeat;box-shadow:inset -3px 0 0 rgba(0,0,0,.12)}
@@ -195,7 +195,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:26px;border-radius:4px;bac
 .contact dt{opacity:.8}
 .contact dd{margin:0;font-weight:700}
 .map{position:relative;border-radius:10px;overflow:hidden;min-height:340px;background:light-dark(#efe7da,#2a2420)}
-.map svg{position:absolute;inset:0;width:100%;height:100%}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
 @media(max-width:860px){.contact{grid-template-columns:minmax(0,1fr)}}
 footer{background:#141210;color:#d9d1c5;font-size:15px}
 footer .cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
