@@ -24,12 +24,14 @@ const cats=[
  {n:'Tijolos e blocos',s:'cerâmicos e de concreto',l:['Tijolo 6 furos','Bloco cerâmico','Bloco de concreto','Artefatos de cimento próprios'],t:'Alvenaria completa, incluindo artefatos de cimento fabricados pela Construbem.'},
  {n:'Telhas e cobertura',s:'telhas, isolamento',l:['Telhas','Cumeeiras','Manta térmica','Calhas e rufos'],b:'Termolar',t:'Telhado completo e isolamento térmico para o calor e o frio do Oeste.'},
  {n:'Madeiras',s:'estrutura e acabamento',l:['Madeira para telhado','Tábuas e caibros','Ripas','Artefatos de madeira'],t:'Madeira para estrutura, forma e acabamento.'},
- {n:'Ferragens e ferramentas',s:'do prego à máquina',l:['Pregos e parafusos','Vergalhões','Ferramentas manuais','Ferramentas elétricas','EPIs'],t:'Ferragem para a obra e ferramenta para quem faz.'},
+ {n:'Ferragens e ferramentas',s:'do prego à máquina',l:['Ferramentas elétricas','Parafusadeiras e furadeiras','Pregos e parafusos','Vergalhões','Ferramentas manuais','EPIs'],b:'Emegotti',t:'Ferragem para a obra e ferramenta elétrica para quem faz.',hot:1},
  {n:'Hidráulica',s:'tubos, conexões, caixas',l:['Tubos e conexões','Registros','Caixas d\'água','Caixas sifonadas'],t:'Água entrando e saindo do jeito certo.'},
  {n:'Elétrica',s:'fios, quadros, tomadas',l:['Fios e cabos','Disjuntores','Tomadas e interruptores','Eletrodutos','Iluminação'],t:'Instalação elétrica do quadro à tomada.'},
- {n:'Tintas e pintura',s:'tintas, massas, rolos',l:['Tinta acrílica','Esmaltes e vernizes','Massa corrida','Rolos e pincéis'],t:'Tudo para pintar por dentro e por fora.'},
+ {n:'Tintas e pintura',s:'tintas, massas, rolos',l:['Tinta acrílica','Esmaltes e vernizes','Massa corrida','Rolos e pincéis'],b:'Renner',t:'Tudo para pintar por dentro e por fora, com a linha de tintas Renner.',hot:1},
  {n:'Portas, janelas e vidros',s:'prontas e sob medida',l:['Portas de alumínio','Portas sanfonadas','Janelas','Esquadrias sob medida','Vidros'],b:'Deon, Plasbil',t:'Linha pronta das melhores marcas e esquadrias de metal e madeira feitas aqui.',go:'#sob-medida'},
- {n:'Louças, cubas e metais',s:'banheiro e cozinha',l:['Cubas de sobrepor','Louças sanitárias','Torneiras','Acessórios de banheiro'],b:'Eval, Manplex, Loft',t:'Banheiro e cozinha com cara nova.'}
+ {n:'Louças, cubas e metais',s:'banheiro e cozinha',l:['Torneira gourmet com bica flexível','Cubas de sobrepor','Louças sanitárias','Torneiras','Acessórios de banheiro'],b:'Eval, Manplex, Loft',t:'Banheiro e cozinha com cara nova, das cubas às torneiras gourmet.',hot:1},
+ {n:'Área externa e lazer',s:'cadeiras, mesas, térmicas',l:['Espreguiçadeiras de alumínio e aço','Cadeiras de praia','Cadeira Acapulco','Cadeira de balanço','Mesas e cadeiras plásticas','Caixas térmicas','Guarda-sóis e boias'],t:'O que mais sai nas lojas de Serra Alta e Saltinho: tudo para o pátio, a piscina, o rio e a praia.',hot:1},
+ {n:'Iluminação e lustres',s:'lustres, pendentes, lâmpadas',l:['Lustres','Pendentes','Plafons','Lâmpadas LED'],t:'Lustres e iluminação para dar acabamento à casa.'}
 ];
 
 /* Perguntas do chat: [pergunta, resposta] */
@@ -93,7 +95,9 @@ const catIcons=[
  '<svg viewBox="0 0 48 48"><path d="M27 4 10 27h12l-3 17 19-25H26z" fill="#f2b632"/></svg>',
  '<svg viewBox="0 0 48 48"><path d="M8 16h22v22a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4z" fill="#fff"/><path d="M8 16h22v6H8z" fill="#f2b632"/><rect x="32" y="6" width="12" height="8" rx="2" fill="#fff"/><path d="M38 14v6h-6" fill="none" stroke="#fff" stroke-width="3"/></svg>',
  '<svg viewBox="0 0 48 48"><rect x="12" y="4" width="24" height="40" rx="2" fill="#fff"/><rect x="16" y="8" width="16" height="14" fill="#b9d7e2"/><circle cx="31" cy="28" r="2.5" fill="#f2b632"/></svg>',
- '<svg viewBox="0 0 48 48"><path d="M4 26h40v4a12 12 0 0 1-12 12H16A12 12 0 0 1 4 30z" fill="#fff"/><path d="M22 26V12h14v6" fill="none" stroke="#f2b632" stroke-width="5" stroke-linecap="round"/></svg>'
+ '<svg viewBox="0 0 48 48"><path d="M4 26h40v4a12 12 0 0 1-12 12H16A12 12 0 0 1 4 30z" fill="#fff"/><path d="M22 26V12h14v6" fill="none" stroke="#f2b632" stroke-width="5" stroke-linecap="round"/></svg>',
+ '<svg viewBox="0 0 48 48"><path d="M6 10 24 4l18 6z" fill="#f2b632"/><path d="M24 7v14" stroke="#fff" stroke-width="3"/><path d="M10 30h20l4 -10" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/><path d="M12 30l-4 12M28 30l4 12" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>',
+ '<svg viewBox="0 0 48 48"><path d="M24 4v10" stroke="#fff" stroke-width="3"/><path d="M10 30a14 14 0 0 1 28 0z" fill="#fff"/><circle cx="24" cy="35" r="5" fill="#f2b632"/><path d="M14 42l-3 3M34 42l3 3M24 44v3" stroke="#f2b632" stroke-width="2.5" stroke-linecap="round"/></svg>'
 ];
 
 /* Entrega: modos de receber o material e suas etapas [título, detalhe, ícone] */
@@ -125,4 +129,14 @@ const vitrine=[
  {f:'cadeiras-praia.jpg',w:640,h:640,tag:'Linha verão',t:'Cadeiras e caixas térmicas',d:'Para a praia, o rio e o pátio',alt:'Cadeiras de praia rosa e caixa térmica na areia'},
  {f:'varal.jpg',w:612,h:612,tag:'Utilidades',t:'Para o dia a dia da casa',d:'Varais, organizadores e utilidades',alt:'Varal de chão aberto em uma lavanderia clara'},
  {f:'loja-cadeiras.jpg',w:361,h:640,tag:'Na loja',t:'Vitrine de verão',d:'Cadeiras, guarda-sóis e boias à pronta-entrega',alt:'Loja Construbem com cadeiras de praia, caixas térmicas e boias expostas'}
+];
+
+/* Mais procurados: ordem pelo que mais aparece nas ofertas do Facebook e do Instagram (nov/2026).
+   c = índice em cats, f = foto em img/vitrine (opcional) */
+const destaques=[
+ {c:10,t:'Área externa e lazer',d:'Espreguiçadeiras, cadeiras Acapulco e de balanço, mesas e caixas térmicas.',f:'loja-cadeiras.jpg'},
+ {c:9,t:'Torneiras gourmet',d:'Bica flexível para a cozinha, além de cubas e metais.'},
+ {c:7,t:'Tintas Renner',d:'Acrílicas, esmaltes e tudo para pintar.'},
+ {c:4,t:'Ferramentas elétricas',d:'Parafusadeiras, furadeiras, serras e lixadeiras.',f:'ferramentas.jpg'},
+ {c:11,t:'Lustres e iluminação',d:'Lustres, pendentes e lâmpadas para o acabamento.'}
 ];

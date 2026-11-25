@@ -88,8 +88,8 @@ let cat=8,query='';
 const norm=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
 const matches=i=>{if(!query)return true;const C=cats[i];return norm([C.n,C.s,C.t,(C.b||''),...C.l].join(' ')).includes(query)};
 function renderWall(){
-  const B=i=>`<button class="brk ${query?(matches(i)?'hit':'dim'):''}" data-i="${i}" aria-pressed="${i===cat}">${esc(cats[i].n)}<small>${esc(cats[i].s)}</small></button>`,H='<span class="half" aria-hidden="true"></span>';
-  $('wall').innerHTML=B(0)+B(1)+B(2)+H+B(3)+B(4)+H+B(5)+B(6)+B(7)+H+B(8)+B(9)+H;
+  const B=i=>`<button class="brk ${query?(matches(i)?'hit':'dim'):''}" data-i="${i}" aria-pressed="${i===cat}">${cats[i].hot?'<i class="hot">Mais procurado</i>':''}${esc(cats[i].n)}<small>${esc(cats[i].s)}</small></button>`,H='<span class="half" aria-hidden="true"></span>';
+  $('wall').innerHTML=B(0)+B(1)+B(2)+H+B(3)+B(4)+H+B(5)+B(6)+B(7)+H+B(8)+B(9)+H+B(10)+B(11)+'<a class="brk lo" href="https://lojaconstrubem.com.br/" target="_blank" rel="noopener">Loja online<small>ver tudo no site da loja</small></a>';
   renderDetail();
 }
 function renderDetail(){
@@ -98,14 +98,18 @@ function renderDetail(){
   d.classList.remove('fade');void d.offsetWidth;if(!reduce)d.classList.add('fade');
 }
 $('detail').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)add(b.dataset.n)});
-$('wall').addEventListener('click',e=>{const b=e.target.closest('.brk');if(b){cat=+b.dataset.i;renderWall();if(innerWidth<860)$('detail').scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'})}});
+$('wall').addEventListener('click',e=>{const b=e.target.closest('button.brk');if(b){cat=+b.dataset.i;renderWall();if(innerWidth<860)$('detail').scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'})}});
 $('q').addEventListener('input',e=>{query=norm(e.target.value.trim());const hits=cats.map((c,i)=>i).filter(matches);
   if(query&&hits.length&&!hits.includes(cat))cat=hits[0];
-  $('qh').textContent=!query?'10 seções':hits.length?hits.length+(hits.length>1?' seções':' seção'):'sem resultado';
+  $('qh').textContent=!query?cats.length+' seções':hits.length?hits.length+(hits.length>1?' seções':' seção'):'sem resultado';
   renderWall();
   if(query&&!hits.length)$('detail').innerHTML=`<h3>Não achou?</h3><p class="lead">A loja tem muito mais do que cabe aqui. Pergunte direto no balcão do WhatsApp.</p><div class="ctas"><a class="btn solid" target="_blank" rel="noopener" href="${wa('Olá, Construbem! Vocês têm '+e.target.value.trim()+'?')}">Perguntar se tem</a></div>`;
 });
 renderWall();
+
+/* ---------- mais procurados ---------- */
+$('tops').innerHTML=destaques.map((d,i)=>`<button class="tp ${i===0?'big':''}" data-c="${d.c}">${d.f?`<img src="img/vitrine/${esc(d.f)}" alt="" loading="lazy">`:`<span class="ti">${catIcons[d.c]||''}</span>`}<span class="tx">${i===0?'<i>Mais procurado</i>':''}<b>${esc(d.t)}</b><small>${esc(d.d)}</small><em>Ver na loja →</em></span></button>`).join('');
+$('tops').addEventListener('click',e=>{const b=e.target.closest('.tp');if(!b)return;cat=+b.dataset.c;query='';$('q').value='';$('qh').textContent=cats.length+' seções';renderWall();go('#produtos')});
 
 /* ---------- vitrine ---------- */
 $('gal').innerHTML=vitrine.map(v=>`<figure><img src="img/vitrine/${esc(v.f)}" alt="${esc(v.alt)}" loading="lazy" width="${v.w}" height="${v.h}"><figcaption><span>${esc(v.tag)}</span><b>${esc(v.t)}</b><small>${esc(v.d)}</small></figcaption></figure>`).join('');
