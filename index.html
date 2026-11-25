@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Construbem Serra Alta</title>
+<meta name="description" content="Construbem Materiais de Construção e Construtora. Da fundação ao acabamento, em Serra Alta/SC desde 2003.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,400;100,600;100,800;112,900&display=swap" rel="stylesheet">
+<style>
+/* VOICE  occasion: loja de bairro forte e construtora, falando como balcão de obra
+   IDEA   a obra sendo erguida: a página se comporta como um canteiro, do terreno às chaves
+   PICTURE casa isométrica que se monta etapa por etapa, com a trena como controle
+   COLOUR concreto claro, tijolo #c2452a dominante, amarelo-trena de destaque
+   TYPE   Archivo larga 900 nos títulos + Archivo no texto
+   LAYOUT título no alto, canteiro largo abaixo (casa + etapa); no celular: título, casa, trena, etapa */
+:root{color-scheme:light dark;--bg:light-dark(#f2efe9,#161412);--ink:light-dark(#1d1a17,#f2ede5);--mute:light-dark(#5b544c,#b3aa9e);--card:light-dark(#ffffff,#211e1b);--line:light-dark(#dcd5c9,#3a342e);--conc:light-dark(#e5e0d7,#25211e);--brick:light-dark(#c2452a,#d4553a);--brick2:light-dark(#9e3620,#b2432b);--yel:#f2b632;--yel-ink:#2a2110;--earth:light-dark(#dccfb8,#3b3229);--earth2:light-dark(#cbbb9d,#30291f);--glass:#b9d7e2}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Archivo,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-stretch:112%;font-weight:900;letter-spacing:-.02em;line-height:1.05;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,5.4vw,64px)}
+h2{font-size:clamp(30px,4vw,48px)}
+h3{font-size:20px;font-stretch:100%;font-weight:800;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+.band{padding-block:clamp(40px,6vw,88px);padding-left:max(5vw,16px);padding-right:max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.lead{font-size:17px;color:var(--mute);max-width:60ch}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 20px;border-radius:6px;border:2px solid var(--ink);background:transparent;font-weight:800;text-decoration:none;cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+.btn.solid{background:var(--brick);border-color:var(--brick);color:#fff}
+.btn.yel{background:var(--yel);border-color:var(--yel);color:var(--yel-ink)}
+.btn.light{border-color:#fff;color:#fff}
+.scroll{overflow-x:auto;scrollbar-width:thin}
+/* header + trena de progresso */
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:18px;max-width:1240px;margin:0 auto;padding:10px max(5vw,16px)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
+.logo b{font-stretch:112%;font-weight:900;font-size:20px;letter-spacing:-.02em;display:block;line-height:1}
+.logo small{display:block;font-size:12px;color:var(--mute);line-height:1.2}
+nav.top{display:flex;gap:4px;margin-left:auto}
+nav.top a{text-decoration:none;font-weight:600;padding:10px 10px;border-radius:6px;white-space:nowrap}
+nav.top a:hover{background:var(--conc)}
+.hd .btn{min-height:42px;flex:none}
+.tape{height:6px;background:repeating-linear-gradient(90deg,#c99a1e 0 1px,transparent 1px 10px),var(--yel);position:relative}
+.tape i{position:absolute;inset:0 auto 0 0;background:var(--brick);width:0}
+@media(max-width:980px){nav.top{display:none}.hd .btn{margin-left:auto}}
+@media(max-width:420px){.hd .btn span{display:none}}
+.rail{position:fixed;left:14px;top:110px;bottom:24px;width:30px;z-index:20;display:none}
+.rail .t{position:absolute;inset:0;border-radius:4px;background:repeating-linear-gradient(180deg,#a37a12 0 2px,transparent 2px 12px),repeating-linear-gradient(180deg,#a37a12 0 2px,transparent 2px 60px),var(--yel);background-size:10px 100%,18px 100%,100% 100%;background-repeat:no-repeat;box-shadow:inset -3px 0 0 rgba(0,0,0,.12)}
+.rail .m{position:absolute;left:-4px;right:-4px;height:4px;background:var(--brick);top:0;border-radius:2px}
+.rail .lb{position:absolute;left:40px;transform:translateY(-50%);background:var(--ink);color:var(--bg);font-size:13px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap;top:0}
+.rail a{position:absolute;left:0;width:30px;height:14px;transform:translateY(-50%)}
+.rail a::after{content:"";position:absolute;left:12px;top:4px;width:6px;height:6px;border-radius:50%;background:var(--yel-ink);opacity:.5}
+@media(min-width:1320px){.rail{display:block}}
+/* hero */
+.hero{padding-top:clamp(28px,4vw,56px)}
+.hero-top{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px;align-items:end;margin-bottom:28px}
+.hero-top .side{display:grid;gap:18px}
+.ctas{display:flex;flex-wrap:wrap;gap:10px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 18px;font-weight:600;font-size:15px}
+.facts span{display:flex;align-items:center;gap:6px}
+.facts span::before{content:"";width:10px;height:6px;background:var(--brick);border-radius:1px}
+.site{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.stage-pic{position:relative;background:linear-gradient(180deg,light-dark(#e9e4da,#1e1b18),light-dark(#f6f3ee,#24201c));min-height:380px}
+.stage-pic svg{width:100%;height:100%;display:block;position:absolute;inset:0}
+.stage-pic .tag{position:absolute;z-index:1;left:16px;top:14px;background:var(--ink);color:var(--bg);font-weight:800;font-size:14px;padding:4px 10px;border-radius:4px}
+.stage-ui{border-left:1px solid var(--line);padding:22px;display:grid;gap:16px;align-content:start}
+.stage-ui p{color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:15px;font-weight:600}
+.chip:hover{border-color:var(--brick)}
+.chip b{color:var(--brick);font-size:18px;line-height:1}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.sw{width:44px;height:44px;border-radius:6px;border:2px solid var(--line);cursor:pointer}
+.sw[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 2px var(--bg) inset}
+.meter{grid-column:1/-1;border-top:1px solid var(--line);padding:14px 22px 16px;display:grid;gap:10px}
+.steps{display:flex;gap:6px}
+.steps button{flex:1 0 auto;min-height:40px;border:0;border-radius:5px;background:var(--conc);font-weight:700;font-size:14px;cursor:pointer;padding:0 10px;white-space:nowrap}
+.steps button[aria-current=true]{background:var(--brick);color:#fff}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:30px;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:14px;border-radius:3px;background:repeating-linear-gradient(90deg,#9c7414 0 1px,transparent 1px 8px),var(--yel)}
+input[type=range]::-moz-range-track{height:14px;border-radius:3px;background:repeating-linear-gradient(90deg,#9c7414 0 1px,transparent 1px 8px),var(--yel)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:30px;margin-top:-8px;border-radius:4px;background:var(--brick);border:3px solid var(--card)}
+input[type=range]::-moz-range-thumb{width:18px;height:26px;border-radius:4px;background:var(--brick);border:3px solid var(--card)}
+@media(max-width:860px){.hero-top,.site{grid-template-columns:minmax(0,1fr)}.stage-ui{border-left:0;border-top:1px solid var(--line)}.stage-pic{min-height:300px}.meter{order:2}.stage-ui{order:3}}
+@keyframes drop{from{transform:translateY(-26px);opacity:0}}
+.drop{animation:drop .5s cubic-bezier(.2,.9,.3,1.2) both}
+/* wordmark */
+.mark{background:var(--brick);color:#fff;overflow:hidden}
+.word{display:flex;justify-content:space-between;font-stretch:112%;font-weight:900;font-size:clamp(44px,12.4vw,176px);line-height:.9;letter-spacing:-.03em;user-select:none}
+.word span{display:inline-block;transition:transform .25s cubic-bezier(.2,.9,.3,1.4),color .2s;text-shadow:0 .06em 0 var(--brick2)}
+.word span:hover,.word span.up{transform:translateY(-.12em) rotate(-3deg);color:var(--yel)}
+.mark-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:26px;font-size:19px;font-weight:600}
+.mark-row q{font-style:normal;font-weight:800;font-size:clamp(20px,2.4vw,28px)}
+/* produtos */
+.split{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:28px}
+.wall{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;background:light-dark(#cfc7b9,#0f0d0c);padding:6px;border-radius:8px}
+.brk{grid-column:span 2;min-height:84px;border:0;border-radius:3px;background:var(--brick);color:#fff;text-align:left;padding:12px 14px;cursor:pointer;font-weight:800;font-size:16px;line-height:1.2;display:flex;flex-direction:column;justify-content:space-between;transition:transform .18s,background .18s;box-shadow:inset 0 -5px 0 rgba(0,0,0,.16),inset 0 2px 0 rgba(255,255,255,.18)}
+.brk small{font-weight:500;font-size:13px;opacity:.9}
+.brk:hover{transform:translateY(-4px)}
+.brk[aria-pressed=true]{background:var(--yel);color:var(--yel-ink)}
+.half{grid-column:span 1;background:var(--brick2);border-radius:3px;opacity:.75}
+.detail{position:sticky;top:96px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px;display:grid;gap:14px}
+.detail h3{font-size:26px;font-stretch:112%;font-weight:900}
+.detail ul{margin:0;padding-left:18px;columns:2;column-gap:20px}
+.detail .brands{font-size:14px;color:var(--mute)}
+.detail .ctas .btn{min-height:42px}
+@media(max-width:860px){.split{grid-template-columns:minmax(0,1fr)}.detail{position:static}}
+@media(max-width:600px){.wall{grid-template-columns:repeat(2,minmax(0,1fr))}.brk{grid-column:span 1}.half{display:none}.detail ul{columns:1}}
+/* fases */
+.phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:28px}
+.ph{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:12px;grid-template-rows:auto auto 1fr auto}
+.ph svg{width:52px;height:52px}
+.ph q{font-weight:800;font-size:19px;font-style:normal;line-height:1.25}
+.ph p{color:var(--mute);font-size:15px}
+.ph .btn{min-height:42px;justify-self:start;font-size:15px}
+@media(max-width:1000px){.phases{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.phases{grid-template-columns:minmax(0,1fr)}}
+/* sob medida */
+.conc{background:var(--conc)}
+.cfg{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:0;margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.fig{position:relative;min-height:400px;background:repeating-linear-gradient(0deg,transparent 0 23px,var(--line) 23px 24px),repeating-linear-gradient(90deg,transparent 0 23px,var(--line) 23px 24px),var(--card)}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.fig svg text{font:700 14px Archivo,sans-serif;fill:var(--ink);paint-order:stroke;stroke:var(--card);stroke-width:5px}
+.ctl{padding:24px;display:grid;gap:16px;border-left:1px solid var(--line);align-content:start}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{min-height:42px;padding:0 14px;border-radius:6px;border:1px solid var(--line);background:var(--bg);font-weight:700;cursor:pointer;font-size:15px}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fl{display:grid;gap:4px}
+.fl label,.lbl{font-weight:700;font-size:15px;display:flex;justify-content:space-between;gap:8px}
+.fl output{font-variant-numeric:tabular-nums;color:var(--brick);font-weight:800;white-space:nowrap}
+.sum{background:var(--bg);border-radius:8px;padding:14px;font-weight:700}
+@media(max-width:860px){.cfg{grid-template-columns:minmax(0,1fr)}.ctl{border-left:0;border-top:1px solid var(--line)}.fig{min-height:320px}}
+/* calculadora */
+.calc{margin-top:28px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.tabs{grid-column:1/-1;display:flex;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;min-height:52px;border:0;background:transparent;font-weight:800;cursor:pointer;font-size:16px;border-bottom:4px solid transparent}
+.tabs button[aria-selected=true]{border-color:var(--brick);color:var(--brick)}
+.cin{padding:24px;display:grid;gap:14px;align-content:start}
+.num{display:grid;gap:4px}
+.num span{font-weight:700;font-size:15px}
+.num div{display:flex;align-items:center;border:1px solid var(--line);border-radius:6px;background:var(--bg)}
+.num input,.num select{border:0;background:transparent;min-height:46px;padding:0 12px;font-size:16px;width:100%}
+.num em{font-style:normal;color:var(--mute);padding-right:12px;white-space:nowrap}
+.cout{background:var(--ink);color:var(--bg);padding:24px;display:grid;gap:14px;align-content:start}
+.big{font-stretch:112%;font-weight:900;font-size:clamp(44px,6vw,76px);line-height:1;letter-spacing:-.03em;color:var(--yel);font-variant-numeric:tabular-nums}
+.cout ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.cout li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid color-mix(in srgb,var(--bg) 20%,transparent);padding-bottom:6px}
+.cout li b{white-space:nowrap}
+.cout small{opacity:.75;font-size:13px}
+@media(max-width:760px){.calc{grid-template-columns:minmax(0,1fr)}}
+/* construtora */
+.track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;margin-top:28px;scrollbar-width:thin}
+.st{scroll-snap-align:start;flex:0 0 min(360px,84%);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px;display:grid;gap:10px;align-content:start}
+.st svg{height:90px;width:100%}
+.st p{color:var(--mute)}
+.navb{display:flex;gap:8px}
+.navb button{width:46px;height:46px;border-radius:50%;border:2px solid var(--ink);background:transparent;cursor:pointer;font-size:20px;font-weight:800}
+.svc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:34px;border-top:2px solid var(--ink)}
+.svc div{padding:18px 18px 18px 0;border-bottom:1px solid var(--line);display:grid;gap:6px}
+.svc p{color:var(--mute);font-size:15px}
+@media(max-width:760px){.svc{grid-template-columns:minmax(0,1fr)}}
+.rowh{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+/* ofertas + entrega */
+.duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.encarte{background:var(--yel);color:var(--yel-ink);border-radius:10px;padding:28px;position:relative;display:grid;gap:14px;align-content:start;-webkit-mask:radial-gradient(circle 8px at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 8px at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat}
+.encarte .btn{border-color:var(--yel-ink)}
+.encarte .solid{background:var(--yel-ink);border-color:var(--yel-ink);color:var(--yel)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags span{background:#fff8e2;border:2px dashed #a37a12;border-radius:6px;padding:6px 10px;font-weight:800;font-size:15px}
+.deliv{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+.road{height:150px;position:relative;background:linear-gradient(180deg,light-dark(#e9e4da,#1e1b18) 0 62%,light-dark(#5c5650,#38332e) 62% 100%);overflow:hidden}
+.road::after{content:"";position:absolute;left:0;right:0;top:79%;height:4px;background:repeating-linear-gradient(90deg,var(--yel) 0 28px,transparent 28px 56px)}
+.truck{position:absolute;bottom:20px;left:-170px;width:160px;animation:drive 9s linear infinite}
+@keyframes drive{to{left:110%}}
+.deliv .in{padding:24px;display:grid;gap:12px;align-content:start}
+@media(max-width:760px){.duo{grid-template-columns:minmax(0,1fr)}}
+/* chat */
+.chat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:24px;margin-top:28px}
+.qs{display:grid;gap:8px;align-content:start}
+.qs button{text-align:left;min-height:48px;padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.qs button:hover{border-color:var(--brick)}
+.qs button::after{content:"perguntar";font-weight:600;color:var(--brick);font-size:14px;white-space:nowrap}
+.phone{background:light-dark(#e6ddd0,#1d1a17);border:1px solid var(--line);border-radius:14px;display:grid;grid-template-rows:auto 1fr;min-height:420px;max-height:520px;overflow:hidden}
+.phone .bar{background:var(--brick);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px;font-weight:800}
+.phone .bar small{display:block;font-weight:500;opacity:.85;font-size:13px}
+.msgs{padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.mg{max-width:85%;padding:9px 13px;border-radius:12px;font-size:15px;background:var(--card)}
+.mg.me{align-self:flex-end;background:light-dark(#fbe3c4,#4a3420)}
+.dots span{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mute);margin:0 2px;animation:bl 1s infinite}
+.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes bl{50%{opacity:.25}}
+@media(max-width:760px){.chat{grid-template-columns:minmax(0,1fr)}}
+/* contato */
+.cta{background:var(--brick);color:#fff}
+.contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:stretch}
+.contact .info{display:grid;gap:16px;align-content:start}
+.contact dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 16px}
+.contact dt{opacity:.8}
+.contact dd{margin:0;font-weight:700}
+.map{position:relative;border-radius:10px;overflow:hidden;min-height:340px;background:light-dark(#efe7da,#2a2420)}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+@media(max-width:860px){.contact{grid-template-columns:minmax(0,1fr)}}
+footer{background:#141210;color:#d9d1c5;font-size:15px}
+footer .cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+footer h3{color:#fff;font-size:16px;margin-bottom:8px}
+footer p,footer a{color:#d9d1c5;display:block;margin-bottom:4px}
+footer .bottom{border-top:1px solid #2e2a26;margin-top:28px;padding-top:16px;font-size:13px;color:#9d958a}
+@media(max-width:760px){footer .cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* lista da obra */
+.fab{position:fixed;right:16px;bottom:16px;z-index:40;display:flex;align-items:center;gap:10px;min-height:54px;padding:0 18px 0 14px;border-radius:999px;border:0;background:var(--ink);color:var(--bg);font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.fab i{font-style:normal;background:var(--yel);color:var(--yel-ink);min-width:28px;height:28px;border-radius:14px;display:grid;place-items:center;font-size:14px;padding:0 6px}
+.sheet{position:fixed;inset:0;z-index:50;display:none}
+.sheet.on{display:block}
+.sheet .bg{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.sheet .pn{position:absolute;right:0;top:0;bottom:0;width:min(440px,100%);background:var(--bg);display:grid;grid-template-rows:auto 1fr auto;box-shadow:-10px 0 30px rgba(0,0,0,.2)}
+.pn .h{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid var(--yel);background:var(--card)}
+.pn .h button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--bg);font-size:22px;cursor:pointer}
+.items{overflow-y:auto;padding:14px 20px;display:grid;gap:8px;align-content:start;background:repeating-linear-gradient(180deg,transparent 0 47px,var(--line) 47px 48px)}
+.it{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.it .q{display:flex;align-items:center;gap:4px}
+.it .q button{width:36px;height:36px;border-radius:6px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-weight:800}
+.it .q b{min-width:52px;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap;font-size:14px}
+.empty{color:var(--mute);padding:24px 4px}
+.pn .f{padding:16px 20px;display:grid;gap:10px;border-top:1px solid var(--line);background:var(--card)}
+.pn .f .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.pn input,.pn select{min-height:44px;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:0 10px;font-size:16px;width:100%}
+.toast{position:fixed;left:50%;bottom:84px;transform:translate(-50%,20px);opacity:0;background:var(--yel);color:var(--yel-ink);font-weight:800;padding:10px 16px;border-radius:8px;z-index:60;transition:.25s;pointer-events:none;max-width:90vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.note{font-size:13px;color:var(--mute)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.truck{left:40%}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hd">
+    <a class="logo" href="#inicio" aria-label="Construbem, início">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="26" width="17" height="11" rx="1.5" fill="#c2452a"/><rect x="21" y="26" width="17" height="11" rx="1.5" fill="#c2452a"/><rect x="11" y="13" width="18" height="11" rx="1.5" fill="#9e3620"/><rect x="2" y="13" width="7" height="11" rx="1.5" fill="#c2452a"/><rect x="31" y="13" width="7" height="11" rx="1.5" fill="#c2452a"/><path d="M8 11 20 2l12 9" fill="none" stroke="#f2b632" stroke-width="3.5" stroke-linejoin="round"/></svg>
+      <span><b>CONSTRUBEM</b><small>Materiais e construtora</small></span>
+    </a>
+    <nav class="top" aria-label="Seções">
+      <a href="#produtos">Produtos</a><a href="#sob-medida">Sob medida</a><a href="#calculadora">Calculadora</a><a href="#construtora">Construtora</a><a href="#ofertas">Ofertas</a><a href="#contato">Contato</a>
+    </nav>
+    <a class="btn solid" id="hdWa" href="https://wa.me/5549988131058" target="_blank" rel="noopener">WhatsApp <span>(49) 98813-1058</span></a>
+  </div>
+  <div class="tape" aria-hidden="true"><i id="tapeFill"></i></div>
+</header>
+
+<div class="rail" id="rail" aria-hidden="true"><div class="t"></div><div class="m" id="railM"></div><div class="lb" id="railL">Obra</div></div>
+
+<main>
+<section class="band hero" id="inicio" data-trena="Obra">
+  <div class="wrap">
+    <div class="hero-top">
+      <h1>Da fundação ao acabamento, tudo sai daqui da Dom Pedro II.</h1>
+      <div class="side">
+        <p class="lead">Loja de materiais de construção e construtora em Serra Alta desde 2003. A gente vende o material, fabrica a esquadria e, se você quiser, constrói a casa.</p>
+        <div class="ctas"><a class="btn solid" href="#calculadora">Calcular minha obra</a><a class="btn" href="#construtora">Quero construir</a></div>
+      </div>
+    </div>
+    <div class="site" id="obra">
+      <div class="stage-pic"><span class="tag" id="stTag">Etapa 7 de 7</span><svg id="house" viewBox="0 0 600 460" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Casa sendo construída etapa por etapa"></svg></div>
+      <div class="stage-ui">
+        <h3 id="stName" style="font-size:28px;font-stretch:112%;font-weight:900">Acabamento</h3>
+        <p id="stDesc"></p>
+        <div class="chips" id="stItems"></div>
+        <div id="paint" hidden><div class="lbl" style="margin-bottom:8px">Cor da fachada <span id="paintName" style="color:var(--mute);font-weight:600"></span></div><div class="swatches" id="sw"></div></div>
+        <div><button class="btn yel" id="addStage">+ Tudo desta etapa na lista</button></div>
+      </div>
+      <div class="meter">
+        <label class="lbl" for="stRange">Arraste a trena pela obra <span class="note" style="font-weight:600">ou toque numa etapa</span></label>
+        <input type="range" id="stRange" min="0" max="6" step="1" value="6">
+        <div class="steps scroll" id="steps"></div>
+      </div>
+    </div>
+    <div class="facts" style="margin-top:20px"><span>Desde 2003 em Serra Alta</span><span>Loja + construtora</span><span>Esquadrias e artefatos de cimento de fabricação própria</span><span>Entrega com frota própria</span><span>Rede Construnião</span></div>
+  </div>
+</section>
+
+<section class="band mark" aria-label="Construbem">
+  <div class="wrap">
+    <div class="word" id="word" aria-label="Construbem"></div>
+    <div class="mark-row"><q>Construir bem, para construir sempre.</q><span>Av. Dom Pedro II, 740 · Centro · Serra Alta/SC</span></div>
+  </div>
+</section>
+
+<section class="band" id="produtos" data-trena="Produtos">
+  <div class="wrap">
+    <h2>Uma parede inteira de produtos.</h2>
+    <p class="lead" style="margin-top:12px">Cada tijolo é uma seção da loja. Toque para ver o que tem e pedir preço direto no WhatsApp.</p>
+    <div class="split">
+      <div class="wall" id="wall"></div>
+      <aside class="detail" id="detail" aria-live="polite"></aside>
+    </div>
+  </div>
+</section>
+
+<section class="band conc" id="fases" data-trena="Sua fase">
+  <div class="wrap">
+    <h2>Em que pé está a sua obra?</h2>
+    <div class="phases" id="phases"></div>
+  </div>
+</section>
+
+<section class="band" id="sob-medida" data-trena="Sob medida">
+  <div class="wrap">
+    <div class="rowh"><h2>Esquadria do seu tamanho, feita aqui.</h2><p class="lead">A Construbem fabrica esquadrias de metal e de madeira. Desenhe a sua e mande as medidas.</p></div>
+    <div class="cfg">
+      <div class="fig"><svg id="win" role="img" aria-label="Desenho da esquadria com medidas"></svg></div>
+      <div class="ctl">
+        <div><div class="lbl" style="margin-bottom:6px">Tipo</div><div class="seg" id="wType"></div></div>
+        <div><div class="lbl" style="margin-bottom:6px">Material</div><div class="seg" id="wMat"></div></div>
+        <div><div class="lbl" style="margin-bottom:6px">Cor</div><div class="seg" id="wCor"></div></div>
+        <div class="fl"><label for="wW">Largura <output id="wWo"></output></label><input type="range" id="wW" min="40" max="240" step="5" value="150"></div>
+        <div class="fl"><label for="wH">Altura <output id="wHo"></output></label><input type="range" id="wH" min="40" max="240" step="5" value="110"></div>
+        <div class="sum" id="wSum"></div>
+        <div class="ctas"><a class="btn solid" id="wWa" target="_blank" rel="noopener" href="#">Pedir orçamento</a><button class="btn" id="wAdd">+ Lista</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band conc" id="calculadora" data-trena="Calculadora">
+  <div class="wrap">
+    <div class="rowh"><h2>Quanto material a sua obra pede?</h2><p class="lead">Uma conta rápida antes de pedir o orçamento. O resultado vai direto para a sua lista.</p></div>
+    <div class="calc">
+      <div class="tabs" role="tablist" id="ctabs"></div>
+      <div class="cin" id="cin"></div>
+      <div class="cout" id="cout"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="construtora" data-trena="Construtora">
+  <div class="wrap">
+    <div class="rowh"><div><h2>A construtora que tem a loja ao lado.</h2><p class="lead" style="margin-top:12px">Quem constrói com a Construbem não espera material: ele sai da nossa loja e chega na obra com a nossa frota.</p></div><div class="navb"><button id="prv" aria-label="Etapa anterior">←</button><button id="nxt" aria-label="Próxima etapa">→</button></div></div>
+    <div class="track" id="track" tabindex="0" aria-label="Como construímos"></div>
+    <div class="svc">
+      <div><h3>Construção e reforma</h3><p>Casas, ampliações e reformas, com engenharia e material da própria loja.</p></div>
+      <div><h3>Instalações</h3><p>Portas, janelas, tetos, divisórias e armários embutidos instalados por quem fabrica.</p></div>
+      <div><h3>Calçadas, ruas e praças</h3><p>Obras de urbanização e pavimentação para prefeituras e empresas.</p></div>
+      <div><h3>Artefatos de cimento</h3><p>Peças de concreto fabricadas pela Construbem para a sua obra.</p></div>
+      <div><h3>Esquadrias de metal e madeira</h3><p>Produção própria, sob medida, com instalação.</p></div>
+      <div><h3>Frete de materiais</h3><p>Transporte de cargas em Serra Alta e para outros municípios.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band conc" id="ofertas" data-trena="Ofertas">
+  <div class="wrap duo">
+    <div class="encarte">
+      <h2>Encarte novo todo mês.</h2>
+      <p>As ofertas da Construbem saem em encarte, válidas por período ou enquanto durarem os estoques. Peça o encarte atual e receba no seu WhatsApp.</p>
+      <div class="tags"><span>Cimento</span><span>Isolamento térmico</span><span>Portas</span><span>Cubas</span><span>Tintas</span><span>Ferramentas</span></div>
+      <div class="ctas"><a class="btn solid" target="_blank" rel="noopener" href="https://wa.me/5549988131058?text=Ol%C3%A1%2C%20Construbem!%20Quero%20receber%20o%20encarte%20de%20ofertas%20do%20m%C3%AAs.">Quero o encarte</a><a class="btn" href="https://lojaconstrubem.com.br/" target="_blank" rel="noopener">Loja online</a></div>
+      <p class="note" style="color:var(--yel-ink)">Na loja online você compra e retira grátis na loja.</p>
+    </div>
+    <div class="deliv">
+      <div class="road" aria-hidden="true"><svg class="truck" viewBox="0 0 160 70"><rect x="2" y="10" width="96" height="44" rx="3" fill="#c2452a"/><rect x="10" y="18" width="80" height="6" fill="#9e3620"/><rect x="10" y="30" width="80" height="6" fill="#9e3620"/><path d="M98 22h30l20 18v14H98z" fill="#f2b632"/><path d="M106 28h20l12 12h-32z" fill="#b9d7e2"/><circle cx="28" cy="56" r="10" fill="#1d1a17"/><circle cx="28" cy="56" r="4" fill="#ccc"/><circle cx="126" cy="56" r="10" fill="#1d1a17"/><circle cx="126" cy="56" r="4" fill="#ccc"/><text x="50" y="49" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="900" font-size="10" fill="#fff">CONSTRUBEM</text></svg></div>
+      <div class="in"><h3 style="font-size:26px;font-stretch:112%;font-weight:900">Da loja para a sua obra.</h3><p class="lead">Frota própria para levar cimento, blocos, telhas e madeira até o canteiro. Consulte frete e prazo para a sua cidade.</p><div><a class="btn" target="_blank" rel="noopener" href="https://wa.me/5549988131058?text=Ol%C3%A1%2C%20Construbem!%20Quero%20saber%20o%20frete%20para%20a%20minha%20obra.">Consultar frete</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="perguntas" data-trena="Perguntas">
+  <div class="wrap">
+    <h2>Pergunta pra Construbem.</h2>
+    <div class="chat">
+      <div class="qs" id="qs"></div>
+      <div class="phone"><div class="bar"><svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#fff"/><rect x="8" y="22" width="11" height="8" rx="1" fill="#c2452a"/><rect x="21" y="22" width="11" height="8" rx="1" fill="#c2452a"/><rect x="14" y="13" width="12" height="8" rx="1" fill="#9e3620"/></svg><span>Construbem<small>responde na hora</small></span></div><div class="msgs" id="msgs" aria-live="polite"><div class="mg">Oi! Toque numa pergunta ao lado que eu respondo.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="band cta" id="contato" data-trena="Contato">
+  <div class="wrap contact">
+    <div class="info">
+      <h2>Passa aqui na loja ou chama no WhatsApp.</h2>
+      <dl>
+        <dt>Endereço</dt><dd>Av. Dom Pedro II, 740, Centro, Serra Alta/SC, 89871-000</dd>
+        <dt>WhatsApp</dt><dd>(49) 98813-1058</dd>
+        <dt>Telefone</dt><dd>(49) 3364-0320</dd>
+        <dt>E-mail</dt><dd style="overflow-wrap:anywhere">construbemengenharia@gmail.com</dd>
+        <dt>Horário</dt><dd>Confirme pelo WhatsApp</dd>
+      </dl>
+      <div class="ctas"><a class="btn yel" target="_blank" rel="noopener" href="https://wa.me/5549988131058?text=Ol%C3%A1%2C%20Construbem!">Chamar no WhatsApp</a><a class="btn light" href="tel:+554933640320">Ligar</a><button class="btn light" id="cpAddr">Copiar endereço</button></div>
+    </div>
+    <div class="map">
+      <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-label="Mapa ilustrado da loja na Avenida Dom Pedro II">
+        <g fill="light-dark(#e3d8c6,#332c27)" style="fill:light-dark(#e3d8c6,#332c27)">
+          <rect x="20" y="20" width="150" height="110" rx="6"/><rect x="200" y="20" width="170" height="110" rx="6"/><rect x="400" y="20" width="180" height="110" rx="6"/>
+          <rect x="20" y="230" width="150" height="150" rx="6"/><rect x="200" y="230" width="170" height="150" rx="6"/><rect x="400" y="230" width="180" height="150" rx="6"/>
+        </g>
+        <rect x="0" y="148" width="600" height="66" style="fill:light-dark(#fff,#4a433c)"/>
+        <line x1="0" y1="181" x2="600" y2="181" stroke="#f2b632" stroke-width="3" stroke-dasharray="18 14"/>
+        <rect x="178" y="0" width="14" height="400" style="fill:light-dark(#fff,#4a433c)"/><rect x="380" y="0" width="12" height="400" style="fill:light-dark(#fff,#4a433c)"/>
+        <text x="40" y="172" style="font:800 15px Archivo,sans-serif;fill:light-dark(#5b544c,#cfc6b9)">Av. Dom Pedro II</text>
+        <g transform="translate(290 226)"><rect x="-58" y="0" width="116" height="66" rx="4" fill="#c2452a"/><rect x="-58" y="0" width="116" height="16" fill="#f2b632"/><text x="0" y="12" text-anchor="middle" style="font:900 11px Archivo,sans-serif;fill:#2a2110">CONSTRUBEM</text><rect x="-14" y="30" width="28" height="36" fill="#7a2a18"/></g>
+        <g transform="translate(290 150)"><path d="M0 0c-16-20-24-30-24-42a24 24 0 0 1 48 0C24-30 16-20 0 0z" fill="#1d1a17"/><circle cx="0" cy="-42" r="9" fill="#f2b632"/></g>
+        <text x="320" y="118" style="font:900 16px Archivo,sans-serif;fill:light-dark(#1d1a17,#fff);paint-order:stroke;stroke:light-dark(#efe7da,#2a2420);stroke-width:5px">nº 740</text>
+      </svg>
+      <a class="btn yel" style="position:absolute;right:14px;bottom:14px" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Av.+Dom+Pedro+II,+740,+Serra+Alta,+SC">Como chegar</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="band">
+  <div class="wrap">
+    <div class="cols">
+      <div><h3>Construbem</h3><p>Materiais de construção e construtora em Serra Alta/SC desde 2003.</p><p>Integrante da Rede Construnião.</p></div>
+      <div><h3>Loja</h3><a href="#produtos">Produtos</a><a href="#sob-medida">Esquadrias sob medida</a><a href="#calculadora">Calculadora de obra</a><a href="https://lojaconstrubem.com.br/" target="_blank" rel="noopener">Loja online</a></div>
+      <div><h3>Construtora</h3><a href="#construtora">Como construímos</a><a href="#ofertas">Entrega</a><a href="#perguntas">Perguntas</a></div>
+      <div><h3>Contato</h3><p>Av. Dom Pedro II, 740, Centro</p><p>(49) 3364-0320</p><p>(49) 98813-1058</p><a href="https://www.facebook.com/people/Construbem/100058039246353/" target="_blank" rel="noopener">Facebook</a></div>
+    </div>
+    <div class="bottom">Da Silva Materiais de Construção e Construtora Ltda · CNPJ 05.853.843/0001-54 · Serra Alta/SC</div>
+  </div>
+</footer>
+
+<button class="fab" id="fab" aria-haspopup="dialog">Lista da obra <i id="fabN">0</i></button>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT">
+  <div class="bg" id="shBg"></div>
+  <div class="pn">
+    <div class="h"><h3 id="shT" style="font-size:22px;font-stretch:112%;font-weight:900">Lista da obra</h3><button id="shX" aria-label="Fechar">×</button></div>
+    <div class="items" id="items"></div>
+    <div class="f">
+      <div class="row"><input id="lNome" placeholder="Seu nome" aria-label="Seu nome"><input id="lCid" placeholder="Cidade" aria-label="Cidade"></div>
+      <select id="lEnt" aria-label="Entrega ou retirada"><option>Entregar na obra</option><option>Retiro na loja</option></select>
+      <a class="btn solid" id="lWa" target="_blank" rel="noopener" href="#" style="justify-content:center">Enviar lista no WhatsApp</a>
+      <div class="row"><button class="btn" id="lCp" style="justify-content:center">Copiar lista</button><button class="btn" id="lClr" style="justify-content:center">Limpar</button></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+{
+const WA='5549988131058';
+const wa=t=>'https://wa.me/'+WA+'?text='+encodeURIComponent(t);
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>n.toLocaleString('pt-BR',{maximumFractionDigits:1});
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- lista da obra ---------- */
+let list=[];
+try{list=JSON.parse(localStorage.getItem('cb-lista')||'[]')}catch(e){list=[]}
+const save=()=>{try{localStorage.setItem('cb-lista',JSON.stringify(list))}catch(e){}};
+const qtxt=i=>fmt(i.q)+(i.u?' '+i.u:'×');
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove('on'),1800)}
+function add(n,q=1,u='',silent){const f=list.find(i=>i.n===n&&i.u===u);if(f)f.q+=q;else list.push({n,q,u});save();renderList();if(!silent)toast('Na lista: '+n)}
+function msg(){const nm=$('lNome').value.trim(),cd=$('lCid').value.trim();let t='Olá, Construbem! Gostaria de um orçamento:\n'+list.map(i=>'• '+qtxt(i)+' – '+i.n).join('\n');t+='\n\n'+$('lEnt').value;if(nm)t+='\nNome: '+nm;if(cd)t+='\nCidade: '+cd;return t}
+function renderList(){
+  $('fabN').textContent=list.length;
+  $('items').innerHTML=list.length?list.map((i,k)=>`<div class="it"><span>${esc(i.n)}</span><div class="q"><button data-k="${k}" data-d="-1" aria-label="Menos">−</button><b>${esc(qtxt(i))}</b><button data-k="${k}" data-d="1" aria-label="Mais">+</button></div></div>`).join(''):'<p class="empty">Sua lista está vazia. Toque em + nas etapas da obra, na parede de produtos ou use a calculadora.</p>';
+  $('lWa').href=list.length?wa(msg()):wa('Olá, Construbem! Gostaria de um orçamento.');
+}
+$('items').addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(!b)return;const i=list[+b.dataset.k];const step=i.u&&i.q>=20?Math.max(1,Math.round(i.q/20)):1;i.q+=step*(+b.dataset.d);if(i.q<=0)list.splice(+b.dataset.k,1);save();renderList()});
+['lNome','lCid','lEnt'].forEach(id=>$(id).addEventListener('input',renderList));
+const open=v=>{$('sheet').classList.toggle('on',v);if(v)$('shX').focus()};
+$('fab').onclick=()=>open(true);$('shX').onclick=()=>open(false);$('shBg').onclick=()=>open(false);
+addEventListener('keydown',e=>{if(e.key==='Escape')open(false)});
+$('lClr').onclick=()=>{list=[];save();renderList()};
+$('lCp').onclick=async()=>{try{await navigator.clipboard.writeText(msg());toast('Lista copiada')}catch(e){toast('Não deu para copiar aqui')}};
+renderList();
+
+/* ---------- casa isométrica ---------- */
+const stages=[
+ {n:'Terreno',d:'Antes do primeiro saco de cimento: medir, marcar e limpar. Ferramentas, trena, linha e EPIs.',it:['Carrinho de mão','Pá e enxada','Trena e linha de pedreiro','Luvas e botina']},
+ {n:'Fundação',d:'Base firme com cimento, areia, brita e ferro. E artefatos de cimento fabricados aqui na Construbem.',it:['Cimento 50 kg','Areia média','Brita 1','Vergalhão 3/8"','Artefatos de cimento']},
+ {n:'Alvenaria',d:'Paredes de pé: tijolos, blocos de concreto, cal e argamassa, tudo do mesmo balcão.',it:['Bloco de concreto 14×19×39','Tijolo 6 furos','Cal hidratada','Argamassa de assentamento']},
+ {n:'Instalações',d:'Água e luz passando por dentro da parede: tubos, conexões, registros, fios e disjuntores.',it:['Tubos e conexões PVC','Registros','Fios e cabos','Eletrodutos e caixas 4×2','Disjuntores']},
+ {n:'Cobertura',d:'Telhado para o inverno do Oeste: telhas, madeira e isolamento térmico para a casa ficar fresca no verão.',it:['Telhas','Madeira para telhado','Manta térmica','Calhas e rufos']},
+ {n:'Esquadrias',d:'Portas, janelas e vidros. Esquadrias de metal e de madeira sob medida, fabricadas pela Construbem.',it:['Porta de alumínio','Porta sanfonada','Janela sob medida','Vidros']},
+ {n:'Acabamento',d:'A cara da casa: tintas, louças, cubas e metais. Escolha a cor da fachada e veja na hora.',it:['Tinta acrílica 18 L','Massa corrida','Cuba de sobrepor','Torneira e metais'],paint:1}
+];
+const paints=[['Branco gelo','#ece7dc'],['Areia','#dcc49c'],['Terracota','#c9754f'],['Oliva','#8f9668'],['Azul colonial','#7393ab'],['Grafite','#5a5b60']];
+let paint=paints[1],stage=6,prev=-1;
+const u=36,ox=270,oy=160,c=.866;
+const P=(x,y,z)=>(ox+(x-y)*c*u).toFixed(1)+','+(oy+(x+y)*.5*u-z*u).toFixed(1);
+const pg=(pts,fill,s,extra='')=>`<polygon data-s="${s}" points="${pts.map(p=>P(...p)).join(' ')}" fill="${fill}" ${extra}/>`;
+const ln=(a,b)=>'M'+P(...a)+'L'+P(...b);
+const shade=(h,f)=>'#'+[1,3,5].map(i=>Math.max(0,Math.min(255,Math.round(parseInt(h.slice(i,i+2),16)*f))).toString(16).padStart(2,'0')).join('');
+function house(){
+  const s=stage,z0=.35,Z=3.35,g=[];
+  g.push(pg([[-1,-1,0],[9,-1,0],[9,7,0],[-1,7,0]],'var(--earth)',0));
+  g.push(pg([[-1,7,0],[9,7,0],[9,7,-.35],[-1,7,-.35]],'var(--earth2)',0),pg([[9,-1,0],[9,7,0],[9,7,-.35],[9,-1,-.35]],'var(--earth2)',0));
+  if(s===0){g.push(`<path data-s="0" d="${ln([0,0,.3],[8,0,.3])+ln([8,0,.3],[8,6,.3])+ln([8,6,.3],[0,6,.3])+ln([0,6,.3],[0,0,.3])}" stroke="#c2452a" stroke-width="2" stroke-dasharray="6 5" fill="none"/>`);[[0,0],[8,0],[8,6],[0,6]].forEach(([x,y])=>g.push(`<path data-s="0" d="${ln([x,y,0],[x,y,.7])}" stroke="#8a5a36" stroke-width="5"/>`))}
+  if(s>=2)g.push(pg([[8,0,0],[9.4,.8,0],[9.4,6.6,0],[8,6,0]],'rgba(0,0,0,.13)',2));
+  if(s>=1){g.push(pg([[0,0,z0],[8,0,z0],[8,6,z0],[0,6,z0]],'#d3cec4',1),pg([[0,6,0],[8,6,0],[8,6,z0],[0,6,z0]],'#b3ada2',1),pg([[8,0,0],[8,6,0],[8,6,z0],[8,0,z0]],'#97918a',1))}
+  const painted=s>=6,wl=painted?paint[1]:'#bfb9ae',wr=painted?shade(paint[1],.8):'#a19b91';
+  if(s>=2){
+    g.push(pg([[0,6,z0],[8,6,z0],[8,6,Z],[0,6,Z]],wl,2),pg([[8,0,z0],[8,6,z0],[8,6,Z],[8,0,Z]],wr,2));
+    if(s<4)g.push(pg([[0,0,Z],[8,0,Z],[8,6,Z],[0,6,Z]],'#cfc9be',2),pg([[.3,.3,Z],[7.7,.3,Z],[7.7,5.7,Z],[.3,5.7,Z]],'#a8a296',2));
+    if(!painted){let d='';for(let r=0;r<6;r++){const a=z0+r*.5;if(r)d+=ln([0,6,a],[8,6,a])+ln([8,0,a],[8,6,a]);for(let x=(r%2?.5:1);x<8;x+=1)d+=ln([x,6,a],[x,6,a+.5]);for(let y=(r%2?.5:1);y<6;y+=1)d+=ln([8,y,a],[8,y,a+.5])}g.push(`<path data-s="2" d="${d}" stroke="#8b857a" stroke-width="1.2" fill="none"/>`)}
+  }
+  if(s===3||s===4){g.push(`<path data-s="3" d="${ln([8,4.6,z0],[8,4.6,1.1])+ln([8,4.6,1.1],[8,1.4,1.1])+ln([8,1.4,1.1],[8,1.4,2])}" stroke="#2f7fc1" stroke-width="5" fill="none" stroke-linecap="round"/>`,`<path data-s="3" d="${ln([2,6,Z],[2,6,2.6])+ln([2,6,2.6],[6.2,6,2.6])+ln([6.2,6,2.6],[6.2,6,1.6])}" stroke="#f2b632" stroke-width="4" fill="none" stroke-linecap="round"/>`,pg([[6,6,1.45],[6.4,6,1.45],[6.4,6,1.75],[6,6,1.75]],'#f2b632',3))}
+  if(s>=5){
+    g.push(pg([[5.1,6,z0],[6.4,6,z0],[6.4,6,2.55],[5.1,6,2.55]],'#8a5a36',5,'stroke="#f4f1ea" stroke-width="3"'),pg([[6.05,6,1.4],[6.2,6,1.4],[6.2,6,1.5],[6.05,6,1.5]],'#f2b632',5));
+    const win=(a,b,z1,z2,face)=>{const q=face?[[8,a,z1],[8,b,z1],[8,b,z2],[8,a,z2]]:[[a,6,z1],[b,6,z1],[b,6,z2],[a,6,z2]];const m=(a+b)/2;g.push(pg(q,'var(--glass)',5,'stroke="#f4f1ea" stroke-width="3"'),`<path data-s="5" d="${face?ln([8,m,z1],[8,m,z2]):ln([m,6,z1],[m,6,z2])}" stroke="#f4f1ea" stroke-width="2.5"/>`)};
+    win(1,3,1.3,2.55,0);win(1.4,3.6,1.3,2.55,1);
+  }
+  if(s>=4){
+    const R=5.2,e=-.4,f=8.4,t1=[e,-.4,Z],t2=[f,-.4,Z];
+    g.push(pg([t1,t2,[f,3,R],[e,3,R]],'#9e3620',4),pg([[8,0,Z],[8,6,Z],[8,3,R]],wr,4),pg([[e,6.4,Z],[f,6.4,Z],[f,3,R],[e,3,R]],'#c2452a',4));
+    let d='';for(let k=1;k<9;k++){const t=k/9;d+=ln([e,6.4-3.4*t,Z+(R-Z)*t],[f,6.4-3.4*t,Z+(R-Z)*t])}for(let x=e+.55;x<f;x+=.55)d+=ln([x,6.4,Z],[x,3,R]);
+    g.push(`<path data-s="4" d="${d}" stroke="#a63a22" stroke-width="1.2" fill="none"/>`,`<path data-s="4" d="${ln([f,6.4,Z],[f,3,R])+ln([f,3,R],[f,-.4,Z])}" stroke="#7a2a18" stroke-width="3" fill="none"/>`);
+  }
+  if(s>=6){g.push(pg([[5.3,6,0.02],[6.2,6,.02],[6.2,7,.02],[5.3,7,.02]],'#e8e1d3',6));[[2,6.6,.9],[3.6,6.7,.7],[8.6,2,.8],[8.7,4.4,.6]].forEach(([x,y,r])=>{const[p,q]=P(x,y,.35).split(',');g.push(`<circle data-s="6" cx="${p}" cy="${q}" r="${r*u*.55}" fill="#5f8a3a"/><circle data-s="6" cx="${+p-4}" cy="${+q-5}" r="${r*u*.3}" fill="#7aa64c"/>`)})}
+  const svg=$('house');svg.innerHTML=g.join('');
+  if(!reduce&&prev>=0&&stage>prev)svg.querySelectorAll('[data-s]').forEach(el=>{const k=+el.dataset.s;if(k>prev&&k<=stage){el.classList.add('drop');el.style.animationDelay=((k-prev-1)*.12)+'s'}});
+  prev=stage;
+}
+function setStage(k){stage=k;const S=stages[k];$('stRange').value=k;$('stName').textContent=S.n;$('stDesc').textContent=S.d;$('stTag').textContent='Etapa '+(k+1)+' de 7';
+  $('stItems').innerHTML=S.it.map(n=>`<button class="chip" data-n="${esc(n)}"><b>+</b>${esc(n)}</button>`).join('');
+  $('paint').hidden=!S.paint;$('paintName').textContent=paint[0];
+  $('steps').querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-current',i===k));house()}
+$('steps').innerHTML=stages.map((s,i)=>`<button data-i="${i}">${esc(s.n)}</button>`).join('');
+$('sw').innerHTML=paints.map((p,i)=>`<button class="sw" data-i="${i}" aria-label="${esc(p[0])}" aria-pressed="${i===1}" style="background:${p[1]}"></button>`).join('');
+let auto=null;const stopAuto=()=>{clearInterval(auto);auto=null};
+$('steps').addEventListener('click',e=>{const b=e.target.closest('button');if(b){stopAuto();setStage(+b.dataset.i)}});
+$('stRange').addEventListener('input',e=>{stopAuto();setStage(+e.target.value)});
+$('stItems').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)add(b.dataset.n)});
+$('addStage').onclick=()=>{stages[stage].it.forEach(n=>add(n,1,'',1));toast(stages[stage].n+': '+stages[stage].it.length+' itens na lista')};
+$('sw').addEventListener('click',e=>{const b=e.target.closest('.sw');if(!b)return;paint=paints[+b.dataset.i];$('sw').querySelectorAll('.sw').forEach(x=>x.setAttribute('aria-pressed',x===b));$('paintName').textContent=paint[0];prev=stage;house()});
+if(reduce){setStage(6)}else{setStage(0);let k=0;auto=setInterval(()=>{k++;setStage(k);if(k>=6)stopAuto()},900)}
+
+/* ---------- marca ---------- */
+$('word').innerHTML=[...'CONSTRUBEM'].map(l=>`<span aria-hidden="true">${l}</span>`).join('');
+$('word').addEventListener('pointermove',e=>{const sp=e.target.closest('span');if(!sp)return;sp.classList.add('up');setTimeout(()=>sp.classList.remove('up'),500)});
+
+/* ---------- parede de produtos ---------- */
+const cats=[
+ {n:'Básicos da obra',s:'cimento, cal, areia, brita',l:['Cimento','Cal hidratada','Areia','Pedra britada','Argamassas','Rejuntes'],t:'O que toda obra pede primeiro, com entrega na obra.'},
+ {n:'Tijolos e blocos',s:'cerâmicos e de concreto',l:['Tijolo 6 furos','Bloco cerâmico','Bloco de concreto','Artefatos de cimento próprios'],t:'Alvenaria completa, incluindo artefatos de cimento fabricados pela Construbem.'},
+ {n:'Telhas e cobertura',s:'telhas, isolamento',l:['Telhas','Cumeeiras','Manta térmica','Calhas e rufos'],b:'Termolar',t:'Telhado completo e isolamento térmico para o calor e o frio do Oeste.'},
+ {n:'Madeiras',s:'estrutura e acabamento',l:['Madeira para telhado','Tábuas e caibros','Ripas','Artefatos de madeira'],t:'Madeira para estrutura, forma e acabamento.'},
+ {n:'Ferragens e ferramentas',s:'do prego à máquina',l:['Pregos e parafusos','Vergalhões','Ferramentas manuais','Ferramentas elétricas','EPIs'],t:'Ferragem para a obra e ferramenta para quem faz.'},
+ {n:'Hidráulica',s:'tubos, conexões, caixas',l:['Tubos e conexões','Registros','Caixas d\'água','Caixas sifonadas'],t:'Água entrando e saindo do jeito certo.'},
+ {n:'Elétrica',s:'fios, quadros, tomadas',l:['Fios e cabos','Disjuntores','Tomadas e interruptores','Eletrodutos','Iluminação'],t:'Instalação elétrica do quadro à tomada.'},
+ {n:'Tintas e pintura',s:'tintas, massas, rolos',l:['Tinta acrílica','Esmaltes e vernizes','Massa corrida','Rolos e pincéis'],t:'Tudo para pintar por dentro e por fora.'},
+ {n:'Portas, janelas e vidros',s:'prontas e sob medida',l:['Portas de alumínio','Portas sanfonadas','Janelas','Esquadrias sob medida','Vidros'],b:'Deon, Plasbil',t:'Linha pronta das melhores marcas e esquadrias de metal e madeira feitas aqui.',go:'#sob-medida'},
+ {n:'Louças, cubas e metais',s:'banheiro e cozinha',l:['Cubas de sobrepor','Louças sanitárias','Torneiras','Acessórios de banheiro'],b:'Eval, Manplex, Loft',t:'Banheiro e cozinha com cara nova.'}
+];
+let cat=8;
+function renderWall(){
+  const B=i=>`<button class="brk" data-i="${i}" aria-pressed="${i===cat}">${esc(cats[i].n)}<small>${esc(cats[i].s)}</small></button>`,H='<span class="half" aria-hidden="true"></span>';
+  $('wall').innerHTML=B(0)+B(1)+B(2)+H+B(3)+B(4)+H+B(5)+B(6)+B(7)+H+B(8)+B(9)+H;
+  const C=cats[cat];
+  $('detail').innerHTML=`<h3>${esc(C.n)}</h3><p class="lead">${esc(C.t)}</p><ul>${C.l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${C.b?`<p class="brands">Marcas na loja: ${esc(C.b)}</p>`:''}<div class="ctas"><a class="btn solid" target="_blank" rel="noopener" href="${wa('Olá, Construbem! Quero preço de '+C.n.toLowerCase()+'.')}">Pedir preço</a><button class="btn" id="catAdd">+ Lista</button>${C.go?`<a class="btn" href="${C.go}">Sob medida</a>`:''}</div>`;
+  $('catAdd').onclick=()=>add(C.n);
+}
+$('wall').addEventListener('click',e=>{const b=e.target.closest('.brk');if(b){cat=+b.dataset.i;renderWall();if(innerWidth<860)$('detail').scrollIntoView({block:'nearest'})}});
+renderWall();
+
+/* ---------- fases ---------- */
+const ic={
+ zero:'<svg viewBox="0 0 52 52"><rect x="4" y="38" width="44" height="8" rx="2" fill="#c2452a"/><path d="M12 38V22l14-10 14 10v16" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="4 3"/></svg>',
+ ban:'<svg viewBox="0 0 52 52"><path d="M8 26h36v6a12 12 0 0 1-12 12H20A12 12 0 0 1 8 32z" fill="#c2452a"/><path d="M14 26V12a5 5 0 0 1 10 0" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="24" cy="18" r="2" fill="currentColor"/></svg>',
+ jan:'<svg viewBox="0 0 52 52"><rect x="8" y="8" width="36" height="36" rx="2" fill="none" stroke="currentColor" stroke-width="3"/><path d="M26 8v36M8 26h36" stroke="currentColor" stroke-width="3"/><rect x="11" y="11" width="12" height="12" fill="#b9d7e2"/><rect x="29" y="29" width="12" height="12" fill="#c2452a"/></svg>',
+ obra:'<svg viewBox="0 0 52 52"><path d="M6 30a20 20 0 0 1 40 0z" fill="#f2b632"/><rect x="4" y="30" width="44" height="6" rx="3" fill="#c2452a"/><path d="M26 10v20" stroke="currentColor" stroke-width="3"/></svg>'
+};
+const phases=[
+ {i:'zero',q:'Vou construir do zero.',a:'Comece pela calculadora: você sai com blocos, cimento e tinta contados e manda a lista de uma vez.',b:'Abrir calculadora',f:()=>location.hash='#calculadora'},
+ {i:'ban',q:'Quero reformar o banheiro.',a:'Louças, cubas, metais, hidráulica e tinta. Coloque o kit na lista e ajuste as quantidades.',b:'Montar kit reforma',f:()=>{['Cuba de sobrepor','Louça sanitária','Torneira e metais','Tubos e conexões PVC','Registros','Tinta acrílica 18 L'].forEach(n=>add(n,1,'',1));toast('Kit reforma de banheiro na lista');open(true)}},
+ {i:'jan',q:'Preciso de uma janela de outro tamanho.',a:'Fabricamos esquadrias de metal e de madeira. Desenhe a sua com as medidas do vão.',b:'Desenhar esquadria',f:()=>location.hash='#sob-medida'},
+ {i:'obra',q:'Quero alguém que faça a obra toda.',a:'A Construbem também é construtora: projeto, orçamento por escrito, obra e entrega, com material da própria loja.',b:'Ver a construtora',f:()=>location.hash='#construtora'}
+];
+$('phases').innerHTML=phases.map((p,k)=>`<div class="ph">${ic[p.i]}<q>${esc(p.q)}</q><p>${esc(p.a)}</p><button class="btn" data-k="${k}">${esc(p.b)}</button></div>`).join('');
+$('phases').addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(b)phases[+b.dataset.k].f()});
+
+/* ---------- esquadria sob medida ---------- */
+const W={t:'Janela de correr',m:'Alumínio',c:'Branco'};
+const wOpts={wType:['Janela de correr','Basculante','Porta de giro'],wMat:['Alumínio','Madeira'],wCor:['Branco','Preto','Bronze','Madeira natural']};
+const wCol={Branco:'#f4f2ee',Preto:'#2b2b2b',Bronze:'#6b4a2f','Madeira natural':'#a8703f'};
+const wKey={wType:'t',wMat:'m',wCor:'c'};
+Object.keys(wOpts).forEach(id=>{$(id).innerHTML=wOpts[id].map(o=>`<button data-v="${esc(o)}" aria-pressed="${W[wKey[id]]===o}">${esc(o)}</button>`).join('');$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;W[wKey[id]]=b.dataset.v;if(id==='wType'&&b.dataset.v==='Porta de giro'&&+$('wH').value<180){$('wH').value=210;$('wW').value=80}if(id==='wMat')W.c=b.dataset.v==='Madeira'?'Madeira natural':'Branco';syncW()})});
+function syncW(){Object.keys(wOpts).forEach(id=>$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===W[wKey[id]])));drawW()}
+function drawW(){
+  const s=$('win'),Wd=s.clientWidth,Ht=s.clientHeight;if(!Wd)return;
+  const w=+$('wW').value,h=+$('wH').value;$('wWo').textContent=w+' cm';$('wHo').textContent=h+' cm';
+  const m=Wd<520?46:64,sc=Math.min((Wd-m*2)/w,(Ht-m*2)/h),fw=w*sc,fh=h*sc,x=(Wd-fw)/2+10,y=(Ht-fh)/2+8,t=Math.max(7,5*sc),col=wCol[W.c],dk=W.c==='Branco'?'#b9b4aa':'rgba(0,0,0,.35)';
+  let g=`<rect x="${x+6}" y="${y+6}" width="${fw}" height="${fh}" fill="rgba(0,0,0,.12)"/><rect x="${x}" y="${y}" width="${fw}" height="${fh}" fill="${col}" stroke="${dk}" stroke-width="1.5"/>`;
+  const gl=(a,b,cw,ch)=>`<rect x="${a}" y="${b}" width="${cw}" height="${ch}" fill="var(--glass)" stroke="${dk}"/><path d="M${a+cw*.15} ${b+ch*.75}L${a+cw*.45} ${b+ch*.25}" stroke="#fff" stroke-width="3" opacity=".6"/>`;
+  if(W.t==='Janela de correr'){const hw=(fw-t*2)/2;g+=`<rect x="${x+t}" y="${y+t}" width="${hw+t/2}" height="${fh-t*2}" fill="${col}" stroke="${dk}"/>`+gl(x+t*1.8,y+t*1.8,hw-t*1.1,fh-t*3.6)+`<rect x="${x+t+hw-t/2}" y="${y+t}" width="${hw+t/2}" height="${fh-t*2}" fill="${col}" stroke="${dk}"/>`+gl(x+t+hw+t*.3,y+t*1.8,hw-t*1.1,fh-t*3.6)+`<path d="M${x+fw/2-30} ${y+fh-t-14}h60m-8-6 8 6-8 6M${x+fw/2-22} ${y+fh-t-20}l-8 6 8 6" stroke="${dk}" stroke-width="2" fill="none"/>`}
+  else if(W.t==='Basculante'){const n=Math.max(2,Math.round(h/35)),ph=(fh-t*2)/n;for(let i=0;i<n;i++)g+=gl(x+t,y+t+i*ph+2,fw-t*2,ph-4)+`<rect x="${x+t}" y="${y+t+i*ph+ph-3}" width="${fw-t*2}" height="4" fill="${col}"/>`}
+  else{if(W.m==='Madeira'){g+=`<rect x="${x+t}" y="${y+t}" width="${fw-t*2}" height="${fh-t}" fill="${col}" stroke="${dk}"/>`;for(let i=1;i<6;i++)g+=`<path d="M${x+t+(fw-t*2)*i/6} ${y+t}v${fh-t}" stroke="${dk}" opacity=".5"/>`}else{g+=`<rect x="${x+t}" y="${y+t}" width="${fw-t*2}" height="${fh-t}" fill="${col}" stroke="${dk}"/>`;const n=Math.floor((fh-t*2)/10);for(let i=1;i<n;i++)g+=`<path d="M${x+t+6} ${y+t+i*10}h${fw-t*2-12}" stroke="${dk}" opacity=".55"/>`}g+=`<circle cx="${x+fw-t-14}" cy="${y+fh*.52}" r="5" fill="#f2b632" stroke="${dk}"/><path d="M${x-20} ${y+fh}h${fw+40}" stroke="var(--ink)" stroke-width="3"/>`}
+  const dy=y-24,dx=x-24;
+  g+=`<path d="M${x} ${dy}h${fw}M${x} ${dy-6}v12M${x+fw} ${dy-6}v12M${dx} ${y}v${fh}M${dx-6} ${y}h12M${dx-6} ${y+fh}h12" stroke="var(--brick)" stroke-width="2"/><text x="${x+fw/2}" y="${dy-8}" text-anchor="middle">${w} cm</text><text transform="translate(${dx-8} ${y+fh/2}) rotate(-90)" text-anchor="middle">${h} cm</text>`;
+  s.innerHTML=g;
+  const d=`${W.t}, ${W.m.toLowerCase()} ${W.c.toLowerCase()}, ${w} × ${h} cm`;
+  $('wSum').textContent=d+' · área '+fmt(w*h/10000)+' m²';
+  $('wWa').href=wa('Olá, Construbem! Quero orçamento de esquadria sob medida: '+d+'.');
+}
+$('wW').addEventListener('input',drawW);$('wH').addEventListener('input',drawW);
+$('wAdd').onclick=()=>{const w=$('wW').value,h=$('wH').value;add(`${W.t} sob medida ${w}×${h} cm (${W.m.toLowerCase()} ${W.c.toLowerCase()})`)};
+const roW=new ResizeObserver(drawW);roW.observe($('win'));
+
+/* ---------- calculadora ---------- */
+const blocks=[['Bloco de concreto 14×19×39',12.5],['Bloco cerâmico 9×19×19',25],['Tijolo 6 furos 9×14×19',33]];
+const calcs={
+ parede:{n:'Paredes',f:[['comp','Comprimento total das paredes',24,'m'],['alt','Altura',2.8,'m'],['ab','Portas e janelas (descontar)',6,'m²']],sel:blocks,
+  r:v=>{const a=Math.max(0,v.comp*v.alt-v.ab),b=blocks[v.sel],q=Math.ceil(a*b[1]*1.1);return{big:fmt(q),lb:b[0]+' (unidades)',rows:[['Área de parede',fmt(a)+' m²'],['Consumo',fmt(b[1])+' un/m²'],['Perda considerada','10%']],items:[[b[0],q,'un']]}}},
+ concreto:{n:'Contrapiso e laje',f:[['area','Área',60,'m²'],['esp','Espessura',6,'cm']],
+  r:v=>{const vol=v.area*v.esp/100*1.05,ci=Math.ceil(vol*7),ar=Math.ceil(vol*.56*10)/10,br=Math.ceil(vol*.83*10)/10;return{big:ci,lb:'sacos de cimento de 50 kg',rows:[['Volume com 5% de perda',fmt(vol)+' m³'],['Areia média',fmt(ar)+' m³'],['Brita 1',fmt(br)+' m³']],items:[['Cimento 50 kg',ci,'sacos'],['Areia média',ar,'m³'],['Brita 1',br,'m³']]}}},
+ pintura:{n:'Pintura',f:[['area','Área de parede',120,'m²'],['dem','Demãos',2,'']],
+  r:v=>{const L=Math.ceil(v.area*v.dem/12);let la=Math.floor(L/18),ga=Math.ceil((L-la*18)/3.6);if(ga>=4){la++;ga=0}const it=[];if(la)it.push(['Tinta acrílica 18 L',la,la>1?'latas':'lata']);if(ga)it.push(['Tinta acrílica 3,6 L',ga,ga>1?'galões':'galão']);return{big:fmt(L)+' L',lb:'de tinta',rows:[['Latas de 18 L',String(la)],['Galões de 3,6 L',String(ga)],['Rendimento usado','12 m² por litro por demão']],items:it}}}
+};
+let ct='parede';const cv={};
+Object.entries(calcs).forEach(([k,c])=>{cv[k]={sel:0};c.f.forEach(f=>cv[k][f[0]]=f[2])});
+$('ctabs').innerHTML=Object.entries(calcs).map(([k,c])=>`<button role="tab" data-k="${k}" id="tab-${k}">${esc(c.n)}</button>`).join('');
+$('ctabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){ct=b.dataset.k;renderCalc(1)}});
+function renderCalc(full){
+  const C=calcs[ct],V=cv[ct];
+  $('ctabs').querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===ct));
+  if(full)$('cin').innerHTML=(C.sel?`<label class="num"><span>Tipo de bloco</span><div><select id="c-sel">${C.sel.map((b,i)=>`<option value="${i}" ${i===V.sel?'selected':''}>${esc(b[0])}</option>`).join('')}</select></div></label>`:'')+C.f.map(f=>`<label class="num"><span>${esc(f[1])}</span><div><input id="c-${f[0]}" type="number" inputmode="decimal" min="0" step="any" value="${V[f[0]]}"><em>${esc(f[3])}</em></div></label>`).join('')+'<p class="note">Estimativa de referência. Nossa equipe confere as quantidades no orçamento.</p>';
+  const R=C.r(V);
+  $('cout').innerHTML=`<div><div class="big">${esc(R.big)}</div><div style="font-weight:700;margin-top:6px">${esc(R.lb)}</div></div><ul>${R.rows.map(r=>`<li><span>${esc(r[0])}</span><b>${esc(r[1])}</b></li>`).join('')}</ul><div class="ctas"><button class="btn yel" id="cAdd">+ Colocar na lista</button></div><small>Valores para planejamento. Para estrutura, siga o projeto do seu engenheiro.</small>`;
+  $('cAdd').onclick=()=>{R.items.forEach(i=>add(i[0],i[1],i[2],1));toast(R.items.length+' item(ns) na lista');};
+}
+$('cin').addEventListener('input',e=>{const id=e.target.id.slice(2);const v=parseFloat(String(e.target.value).replace(',','.'));cv[ct][id]=isFinite(v)&&v>=0?v:0;renderCalc(0)});
+renderCalc(1);
+
+/* ---------- construtora ---------- */
+const steps=[
+ {n:'Primeira conversa',d:'Você conta a ideia, mostra o terreno e diz quanto quer investir. A gente diz o que dá para fazer.',s:'<rect x="30" y="20" width="90" height="50" rx="10" fill="#c2452a"/><path d="M50 70l-6 14 18-14" fill="#c2452a"/><rect x="140" y="30" width="100" height="46" rx="10" fill="#f2b632"/><path d="M220 76l6 12-18-12" fill="#f2b632"/>'},
+ {n:'Projeto e orçamento',d:'Projeto, etapas, prazos e valores no papel antes de qualquer tijolo. Sem surpresa no meio da obra.',s:'<rect x="70" y="8" width="120" height="78" rx="3" fill="#e9e4da" stroke="#1d1a17" stroke-width="2"/><path d="M90 66V40l40-20 40 20v26z" fill="none" stroke="#2f7fc1" stroke-width="3"/><path d="M84 30h20M84 38h14" stroke="#c2452a" stroke-width="3"/>'},
+ {n:'Obra',d:'Material saindo da nossa loja, entregue pela nossa frota. Você acompanha cada etapa com quem toca a obra.',s:'<rect x="40" y="64" width="180" height="14" fill="#9e3620"/><g fill="#c2452a"><rect x="40" y="46" width="42" height="16"/><rect x="86" y="46" width="42" height="16"/><rect x="132" y="46" width="42" height="16"/><rect x="62" y="28" width="42" height="16"/><rect x="108" y="28" width="42" height="16"/></g><path d="M200 20v44M200 20h40" stroke="#f2b632" stroke-width="5"/>'},
+ {n:'Entrega das chaves',d:'Vistoria junto com você, ajustes finais e a casa pronta para morar.',s:'<circle cx="100" cy="46" r="24" fill="none" stroke="#f2b632" stroke-width="8"/><path d="M124 46h90v14M190 46v12" stroke="#f2b632" stroke-width="8" fill="none"/><circle cx="100" cy="46" r="8" fill="#c2452a"/>'}
+];
+$('track').innerHTML=steps.map(s=>`<article class="st"><svg viewBox="0 0 260 92" aria-hidden="true">${s.s}</svg><h3 style="font-size:24px;font-stretch:112%;font-weight:900">${esc(s.n)}</h3><p>${esc(s.d)}</p></article>`).join('');
+const go=d=>{const tr=$('track'),w=tr.querySelector('.st').offsetWidth+14;tr.scrollBy({left:d*w,behavior:reduce?'auto':'smooth'})};
+$('prv').onclick=()=>go(-1);$('nxt').onclick=()=>go(1);
+$('track').addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();go(1)}if(e.key==='ArrowLeft'){e.preventDefault();go(-1)}});
+
+/* ---------- chat ---------- */
+const faq=[
+ ['Vocês entregam na obra?','Entregamos, sim, com frota própria, em Serra Alta e região. Mande a cidade no WhatsApp (49) 98813-1058 que a gente passa frete e prazo.'],
+ ['Posso comprar pela internet?','Pode. A loja online é lojaconstrubem.com.br e você retira grátis na loja, na Av. Dom Pedro II, 740.'],
+ ['Vocês fazem esquadria sob medida?','Fazemos esquadrias de metal e de madeira aqui mesmo. Use o desenho de esquadria nesta página e mande as medidas.'],
+ ['A construtora faz a obra toda?','Faz. Construção e reforma, instalação de portas e janelas, calçadas e obras de urbanização. Tudo começa com uma conversa e um orçamento por escrito.'],
+ ['Como peço um orçamento?','Monte a Lista da obra (botão no canto da tela) e envie pelo WhatsApp. Ou ligue no (49) 3364-0320.'],
+ ['Há quanto tempo vocês existem?','Desde 2003 em Serra Alta. A Construbem faz parte da Rede Construnião, de lojas de materiais de construção do Oeste catarinense.']
+];
+$('qs').innerHTML=faq.map((f,i)=>`<button data-i="${i}">${esc(f[0])}</button>`).join('');
+let busy=false;
+$('qs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||busy)return;busy=true;const f=faq[+b.dataset.i],m=$('msgs');
+  m.insertAdjacentHTML('beforeend',`<div class="mg me">${esc(f[0])}</div><div class="mg dots" id="typing"><span></span><span></span><span></span></div>`);m.scrollTop=m.scrollHeight;
+  setTimeout(()=>{$('typing').remove();m.insertAdjacentHTML('beforeend',`<div class="mg">${esc(f[1])}</div>`);m.scrollTop=m.scrollHeight;busy=false},reduce?0:700)});
+
+/* ---------- contato ---------- */
+$('cpAddr').onclick=async()=>{try{await navigator.clipboard.writeText('Av. Dom Pedro II, 740, Centro, Serra Alta/SC, 89871-000');toast('Endereço copiado')}catch(e){toast('Av. Dom Pedro II, 740, Centro')}};
+
+/* ---------- trena de progresso ---------- */
+const secs=[...document.querySelectorAll('[data-trena]')];
+const rail=$('rail');
+secs.forEach(s=>{const a=document.createElement('a');a.href='#'+s.id;a.title=s.dataset.trena;a.setAttribute('aria-label',s.dataset.trena);rail.appendChild(a)});
+function onScroll(){
+  const max=document.documentElement.scrollHeight-innerHeight,p=max>0?Math.min(1,scrollY/max):0;
+  $('tapeFill').style.width=(p*100)+'%';
+  const rh=rail.clientHeight;$('railM').style.top=(p*rh)+'px';$('railL').style.top=(p*rh)+'px';
+  let cur=secs[0];secs.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.45)cur=s});$('railL').textContent=cur.dataset.trena;
+  const H=document.documentElement.scrollHeight;rail.querySelectorAll('a').forEach((a,i)=>a.style.top=(secs[i].offsetTop/H*rh)+'px');
+}
+addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
+}
+</script>
+</body>
+</html>
