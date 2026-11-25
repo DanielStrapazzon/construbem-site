@@ -65,7 +65,7 @@ function house(){
   if(!reduce&&prev>=0&&stage>prev)svg.querySelectorAll('[data-s]').forEach(el=>{const k=+el.dataset.s;if(k>prev&&k<=stage){el.classList.add('drop');el.style.animationDelay=((k-prev-1)*.12)+'s'}});
   prev=stage;
 }
-function setStage(k){stage=k;const S=stages[k];$('stRange').value=k;$('stName').textContent=S.n;$('stDesc').textContent=S.d;$('stTag').textContent='Etapa '+(k+1)+' de 7';const pc=Math.round((k+1)/7*100);$('stPct').textContent=pc+'% concluído';$('stBar').style.width=pc+'%';
+function setStage(k){stage=k;const S=stages[k];$('stRange').value=k;$('stName').textContent=S.n;$('stDesc').textContent=S.d;$('stTag').textContent='Etapa '+(k+1)+' de 7';
   $('stItems').innerHTML=S.it.map(n=>`<button class="chip" data-n="${esc(n)}"><b>+</b>${esc(n)}</button>`).join('');
   $('paint').hidden=!S.paint;$('paintName').textContent=paint[0];
   $('steps').querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-current',i===k));house()}

@@ -420,7 +420,7 @@ footer .wm small{white-space:normal;line-height:1.3}
 .cred-pill{justify-self:start;white-space:nowrap;display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 8px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:700;color:var(--ink)}
 .cred-pill svg{color:var(--logo-gray)}
 .cred-pill i{width:4px;height:4px;border-radius:50%;background:var(--mute)}
-.hero-top{align-items:end}
+.hero-top{align-items:end;margin-bottom:36px}
 .hero .lead{font-size:18px}
 .trust{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:28px}
 .trust div{display:flex;align-items:baseline;gap:12px;padding:16px 18px 16px 0}
