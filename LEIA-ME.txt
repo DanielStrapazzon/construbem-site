@@ -1,0 +1,23 @@
+Site Construbem - Materiais de Construção e Construtora (Serra Alta/SC)
+
+Para publicar: envie a pasta inteira (index.html + css/ fonts/ img/ js/)
+para a raiz da hospedagem. Funciona em qualquer hospedagem estática
+(Hostinger, Netlify, Vercel, GitHub Pages etc.).
+
+Onde editar:
+- Textos e estrutura ......... index.html
+- Dados (WhatsApp, etapas da obra, produtos, cores da fachada,
+  perguntas, etapas da construtora, calculadora)
+                              ... js/dados.js
+                                  (WhatsApp: const WA='5549988131058')
+- Interações ................. js/site.js
+- Cores e estilos ............ css/site.css (variáveis no início: --brick, --yel...)
+- Fonte ...................... css/fonts.css + fonts/ (licença em fonts/OFL.txt,
+                                  mantenha esse arquivo junto das fontes)
+- Ícone e prévia de link ..... img/icone.svg e img/og.png
+
+Depois de ter o domínio próprio, troque em index.html os endereços
+https://danielstrapazzon.github.io/construbem-site/ pelo novo domínio
+(og:image, og:url e canonical).
+
+Para testar no computador: dois cliques em iniciar-site.bat (requer Node.js).
