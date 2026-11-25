@@ -14,7 +14,7 @@
 <link rel="icon" href="img/icone.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/fonts.css?v=1">
-<link rel="stylesheet" href="css/site.css?v=2">
+<link rel="stylesheet" href="css/site.css?v=5">
 </head>
 <body>
 <header>
@@ -31,7 +31,7 @@
   <div class="tape" aria-hidden="true"><i id="tapeFill"></i></div>
 </header>
 
-<div class="rail" id="rail" aria-hidden="true"><div class="t"></div><div class="m" id="railM"></div><div class="lb" id="railL">Obra</div></div>
+<nav class="rail" id="rail" aria-label="Seções da página"><div class="lcd" id="railL">0%</div><ol id="railOl"><span class="fill" id="railF"></span></ol></nav>
 
 <main>
 <section class="band hero" id="inicio" data-trena="Obra">
@@ -72,7 +72,8 @@
 <section class="band" id="produtos" data-trena="Produtos">
   <div class="wrap">
     <h2>Uma parede inteira de produtos.</h2>
-    <p class="lead" style="margin-top:12px">Cada tijolo é uma seção da loja. Toque para ver o que tem e pedir preço direto no WhatsApp.</p>
+    <p class="lead" style="margin-top:12px">Cada tijolo é uma seção da loja. Procure, toque e coloque os itens direto na sua lista.</p>
+    <label class="find"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="m13 13 5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><input id="q" type="search" placeholder="O que você procura? Ex.: torneira, telha, cimento" aria-label="Procurar produto" autocomplete="off"><span class="hint" id="qh">10 seções</span></label>
     <div class="split">
       <div class="wall" id="wall"></div>
       <aside class="detail" id="detail" aria-live="polite"></aside>
@@ -80,10 +81,12 @@
   </div>
 </section>
 
-<section class="band conc" id="fases" data-trena="Sua fase">
+<section class="band fases" id="fases" data-trena="Sua fase">
   <div class="wrap">
     <h2>Em que pé está a sua obra?</h2>
-    <div class="phases" id="phases"></div>
+    <p class="lead" style="margin-top:12px">Escolha a sua situação e veja o caminho mais curto dentro da Construbem.</p>
+    <div class="picks" id="picks" role="group" aria-label="Sua situação"></div>
+    <div class="ans" id="ans" aria-live="polite"><div class="scene"><svg id="scene" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg></div><div class="path" id="path"></div></div>
   </div>
 </section>
 
@@ -118,15 +121,41 @@
 
 <section class="band" id="construtora" data-trena="Construtora">
   <div class="wrap">
-    <div class="rowh"><div><h2>A construtora que tem a loja ao lado.</h2><p class="lead" style="margin-top:12px">Quem constrói com a Construbem não espera material: ele sai da nossa loja e chega na obra com a nossa frota.</p></div><div class="navb"><button id="prv" aria-label="Etapa anterior">←</button><button id="nxt" aria-label="Próxima etapa">→</button></div></div>
-    <div class="track" id="track" tabindex="0" aria-label="Como construímos"></div>
-    <div class="svc">
-      <div><h3>Construção e reforma</h3><p>Casas, ampliações e reformas, com engenharia e material da própria loja.</p></div>
-      <div><h3>Instalações</h3><p>Portas, janelas, tetos, divisórias e armários embutidos instalados por quem fabrica.</p></div>
-      <div><h3>Calçadas, ruas e praças</h3><p>Obras de urbanização e pavimentação para prefeituras e empresas.</p></div>
-      <div><h3>Artefatos de cimento</h3><p>Peças de concreto fabricadas pela Construbem para a sua obra.</p></div>
-      <div><h3>Esquadrias de metal e madeira</h3><p>Produção própria, sob medida, com instalação.</p></div>
-      <div><h3>Frete de materiais</h3><p>Transporte de cargas em Serra Alta e para outros municípios.</p></div>
+    <h2>A construtora que tem a loja ao lado.</h2>
+    <p class="lead" style="margin-top:12px">Conte o que você quer construir. A placa ao lado vai sendo preenchida e você envia o pedido pronto para a nossa equipe.</p>
+    <div class="planner">
+      <form class="qbox" id="plan" onsubmit="return false">
+        <div><div class="qn">O que você quer fazer?</div><div class="types" id="pTipo"></div></div>
+        <div><label class="qn" for="pArea"><span id="pAreaL">Área construída</span><output id="pAreaO"></output></label><input type="range" id="pArea" min="40" max="300" step="5" value="90"></div>
+        <div class="qrow">
+          <div><div class="qn">Já tem o terreno?</div><div class="seg" id="pTer"></div></div>
+          <div><div class="qn">Já tem projeto?</div><div class="seg" id="pPro"></div></div>
+        </div>
+        <div><div class="qn">Quando quer começar?</div><div class="seg" id="pIni"></div></div>
+        <div class="qrow">
+          <label class="num"><span>Seu nome</span><input type="text" id="pNome" autocomplete="name"></label>
+          <label class="num"><span>Cidade da obra</span><input type="text" id="pCid" autocomplete="address-level2"></label>
+        </div>
+      </form>
+      <div class="placa">
+        <div class="board">
+          <div class="bh"><b>CONSTRUBEM</b><span>Construtora</span></div>
+          <div class="plan"><svg id="pPlan" viewBox="0 0 320 170" role="img" aria-label="Planta ilustrativa da obra"></svg></div>
+          <dl id="pDl"></dl>
+          <div class="go"><a class="btn solid" id="pWa" target="_blank" rel="noopener" href="#">Enviar para a construtora</a><p class="note" style="color:#6b6157">Respondemos pelo WhatsApp com os próximos passos e o orçamento por escrito.</p></div>
+        </div>
+        <div class="posts" aria-hidden="true"><i></i><i></i></div>
+      </div>
+    </div>
+    <h3 style="margin-top:56px;font-size:clamp(24px,3vw,32px);font-stretch:112%;font-weight:900">Como funciona</h3>
+    <div class="flow" id="flow"></div>
+    <div class="svc" id="svc">
+      <button data-t="0"><h3>Construção e reforma</h3><p>Casas, ampliações e reformas, com engenharia e material da própria loja.</p><em>Montar meu pedido →</em></button>
+      <button data-go="#sob-medida"><h3>Instalações</h3><p>Portas, janelas, tetos, divisórias e armários embutidos instalados por quem fabrica.</p><em>Ver esquadrias →</em></button>
+      <button data-t="3"><h3>Calçadas, ruas e praças</h3><p>Obras de urbanização e pavimentação para prefeituras e empresas.</p><em>Montar meu pedido →</em></button>
+      <button data-add="Artefatos de cimento"><h3>Artefatos de cimento</h3><p>Peças de concreto fabricadas pela Construbem para a sua obra.</p><em>+ Lista da obra</em></button>
+      <button data-go="#sob-medida"><h3>Esquadrias de metal e madeira</h3><p>Produção própria, sob medida, com instalação.</p><em>Desenhar a minha →</em></button>
+      <button data-go="#ofertas"><h3>Frete de materiais</h3><p>Transporte de cargas em Serra Alta e para outros municípios.</p><em>Consultar frete →</em></button>
     </div>
   </div>
 </section>
@@ -206,7 +235,7 @@
 </div>
 <div class="toast" id="toast" role="status"></div>
 
-<script src="js/dados.js?v=1"></script>
-<script src="js/site.js?v=1"></script>
+<script src="js/dados.js?v=3"></script>
+<script src="js/site.js?v=3"></script>
 </body>
 </html>

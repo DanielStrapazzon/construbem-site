@@ -84,32 +84,57 @@ $('word').innerHTML=[...'CONSTRUBEM'].map(l=>`<span aria-hidden="true">${l}</spa
 $('word').addEventListener('pointermove',e=>{const sp=e.target.closest('span');if(!sp)return;sp.classList.add('up');setTimeout(()=>sp.classList.remove('up'),500)});
 
 /* ---------- parede de produtos ---------- */
-let cat=8;
+let cat=8,query='';
+const norm=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+const matches=i=>{if(!query)return true;const C=cats[i];return norm([C.n,C.s,C.t,(C.b||''),...C.l].join(' ')).includes(query)};
 function renderWall(){
-  const B=i=>`<button class="brk" data-i="${i}" aria-pressed="${i===cat}">${esc(cats[i].n)}<small>${esc(cats[i].s)}</small></button>`,H='<span class="half" aria-hidden="true"></span>';
+  const B=i=>`<button class="brk ${query?(matches(i)?'hit':'dim'):''}" data-i="${i}" aria-pressed="${i===cat}">${esc(cats[i].n)}<small>${esc(cats[i].s)}</small></button>`,H='<span class="half" aria-hidden="true"></span>';
   $('wall').innerHTML=B(0)+B(1)+B(2)+H+B(3)+B(4)+H+B(5)+B(6)+B(7)+H+B(8)+B(9)+H;
-  const C=cats[cat];
-  $('detail').innerHTML=`<h3>${esc(C.n)}</h3><p class="lead">${esc(C.t)}</p><ul>${C.l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${C.b?`<p class="brands">Marcas na loja: ${esc(C.b)}</p>`:''}<div class="ctas"><a class="btn solid" target="_blank" rel="noopener" href="${wa('Olá, Construbem! Quero preço de '+C.n.toLowerCase()+'.')}">Pedir preço</a><button class="btn" id="catAdd">+ Lista</button>${C.go?`<a class="btn" href="${C.go}">Sob medida</a>`:''}</div>`;
-  $('catAdd').onclick=()=>add(C.n);
+  renderDetail();
 }
-$('wall').addEventListener('click',e=>{const b=e.target.closest('.brk');if(b){cat=+b.dataset.i;renderWall();if(innerWidth<860)$('detail').scrollIntoView({block:'nearest'})}});
+function renderDetail(){
+  const C=cats[cat],d=$('detail');
+  d.innerHTML=`<div class="dhead"><div class="dicon">${catIcons[cat]||''}</div><div><h3>${esc(C.n)}</h3><p class="note" style="font-size:15px">${esc(C.t)}</p></div></div><div class="chips">${C.l.map(x=>`<button class="chip" data-n="${esc(x)}"><b>+</b>${esc(x)}</button>`).join('')}</div>${C.b?`<div><div class="note" style="margin-bottom:6px">Marcas na loja</div><div class="badges">${C.b.split(',').map(x=>`<span>${esc(x.trim())}</span>`).join('')}</div></div>`:''}<div class="ctas"><a class="btn solid" target="_blank" rel="noopener" href="${wa('Olá, Construbem! Quero preço de '+C.n.toLowerCase()+'.')}">Pedir preço</a>${C.go?`<a class="btn" href="${C.go}">Sob medida</a>`:''}</div>`;
+  d.classList.remove('fade');void d.offsetWidth;if(!reduce)d.classList.add('fade');
+}
+$('detail').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)add(b.dataset.n)});
+$('wall').addEventListener('click',e=>{const b=e.target.closest('.brk');if(b){cat=+b.dataset.i;renderWall();if(innerWidth<860)$('detail').scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'})}});
+$('q').addEventListener('input',e=>{query=norm(e.target.value.trim());const hits=cats.map((c,i)=>i).filter(matches);
+  if(query&&hits.length&&!hits.includes(cat))cat=hits[0];
+  $('qh').textContent=!query?'10 seções':hits.length?hits.length+(hits.length>1?' seções':' seção'):'sem resultado';
+  renderWall();
+  if(query&&!hits.length)$('detail').innerHTML=`<h3>Não achou?</h3><p class="lead">A loja tem muito mais do que cabe aqui. Pergunte direto no balcão do WhatsApp.</p><div class="ctas"><a class="btn solid" target="_blank" rel="noopener" href="${wa('Olá, Construbem! Vocês têm '+e.target.value.trim()+'?')}">Perguntar se tem</a></div>`;
+});
 renderWall();
 
-/* ---------- fases ---------- */
-const ic={
- zero:'<svg viewBox="0 0 52 52"><rect x="4" y="38" width="44" height="8" rx="2" fill="#c2452a"/><path d="M12 38V22l14-10 14 10v16" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="4 3"/></svg>',
- ban:'<svg viewBox="0 0 52 52"><path d="M8 26h36v6a12 12 0 0 1-12 12H20A12 12 0 0 1 8 32z" fill="#c2452a"/><path d="M14 26V12a5 5 0 0 1 10 0" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="24" cy="18" r="2" fill="currentColor"/></svg>',
- jan:'<svg viewBox="0 0 52 52"><rect x="8" y="8" width="36" height="36" rx="2" fill="none" stroke="currentColor" stroke-width="3"/><path d="M26 8v36M8 26h36" stroke="currentColor" stroke-width="3"/><rect x="11" y="11" width="12" height="12" fill="#b9d7e2"/><rect x="29" y="29" width="12" height="12" fill="#c2452a"/></svg>',
- obra:'<svg viewBox="0 0 52 52"><path d="M6 30a20 20 0 0 1 40 0z" fill="#f2b632"/><rect x="4" y="30" width="44" height="6" rx="3" fill="#c2452a"/><path d="M26 10v20" stroke="currentColor" stroke-width="3"/></svg>'
+/* ---------- fases: escolha sua situação ---------- */
+const go=h=>{const el=document.querySelector(h);if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
+const acts={
+ calc:()=>{ct='parede';renderCalc(1);go('#calculadora')},
+ tinta:()=>{ct='pintura';renderCalc(1);go('#calculadora')},
+ basicos:()=>{['Cimento 50 kg','Areia média','Brita 1','Bloco de concreto 14×19×39','Vergalhão 3/8"'].forEach(n=>add(n,1,'',1));toast('Básicos da obra na lista');open(true)},
+ kit:()=>{['Cuba de sobrepor','Louça sanitária','Torneira e metais','Tubos e conexões PVC','Registros'].forEach(n=>add(n,1,'',1));toast('Kit reforma de banheiro na lista');open(true)},
+ loucas:()=>{cat=9;query='';$('q').value='';renderWall();go('#produtos')},
+ portas:()=>{cat=8;query='';$('q').value='';renderWall();go('#produtos')},
+ esq:()=>go('#sob-medida'),
+ frete:()=>go('#ofertas'),
+ obra:()=>{setTipo(0);go('#construtora')},
+ flow:()=>go('#flow'),
+ waObra:()=>window.open(wa('Olá, Construbem! Quero conversar com a construtora sobre uma obra.'),'_blank','noopener'),
+ waInst:()=>window.open(wa('Olá, Construbem! Quero orçamento de instalação de portas e janelas.'),'_blank','noopener')
 };
-const phases=[
- {i:'zero',q:'Vou construir do zero.',a:'Comece pela calculadora: você sai com blocos, cimento e tinta contados e manda a lista de uma vez.',b:'Abrir calculadora',f:()=>location.hash='#calculadora'},
- {i:'ban',q:'Quero reformar o banheiro.',a:'Louças, cubas, metais, hidráulica e tinta. Coloque o kit na lista e ajuste as quantidades.',b:'Montar kit reforma',f:()=>{['Cuba de sobrepor','Louça sanitária','Torneira e metais','Tubos e conexões PVC','Registros','Tinta acrílica 18 L'].forEach(n=>add(n,1,'',1));toast('Kit reforma de banheiro na lista');open(true)}},
- {i:'jan',q:'Preciso de uma janela de outro tamanho.',a:'Fabricamos esquadrias de metal e de madeira. Desenhe a sua com as medidas do vão.',b:'Desenhar esquadria',f:()=>location.hash='#sob-medida'},
- {i:'obra',q:'Quero alguém que faça a obra toda.',a:'A Construbem também é construtora: projeto, orçamento por escrito, obra e entrega, com material da própria loja.',b:'Ver a construtora',f:()=>location.hash='#construtora'}
-];
-$('phases').innerHTML=phases.map((p,k)=>`<div class="ph">${ic[p.i]}<q>${esc(p.q)}</q><p>${esc(p.a)}</p><button class="btn" data-k="${k}">${esc(p.b)}</button></div>`).join('');
-$('phases').addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(b)phases[+b.dataset.k].f()});
+let ph=0;const doneSteps=new Set();
+$('picks').innerHTML=phases.map((p,i)=>`<button data-i="${i}">${p.ic}${esc(p.q)}</button>`).join('');
+function renderPhase(){
+  const p=phases[ph];
+  $('picks').querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-pressed',i===ph));
+  $('scene').innerHTML=p.scene;
+  $('path').innerHTML=`<h3>${esc(p.t)}</h3><p>${esc(p.d)}</p><ol>${p.steps.map((s,i)=>`<li class="${doneSteps.has(ph+'-'+i)?'ok':''}"><button data-i="${i}"><b>${doneSteps.has(ph+'-'+i)?'✓':i+1}</b><span>${esc(s[0])}<small>${esc(s[1])}</small></span><em>${esc(s[2])}</em></button></li>`).join('')}</ol>`;
+  const a=$('ans');a.classList.remove('fade');void a.offsetWidth;if(!reduce)a.classList.add('fade');
+}
+$('picks').addEventListener('click',e=>{const b=e.target.closest('button');if(b){ph=+b.dataset.i;renderPhase()}});
+$('path').addEventListener('click',e=>{const b=e.target.closest('li button');if(!b)return;const s=phases[ph].steps[+b.dataset.i];doneSteps.add(ph+'-'+b.dataset.i);renderPhase();acts[s[3]]()});
+renderPhase();
 
 /* ---------- esquadria sob medida ---------- */
 const W={t:'Janela de correr',m:'Alumínio',c:'Branco'};
@@ -162,11 +187,48 @@ function renderCalc(full){
 $('cin').addEventListener('input',e=>{const id=e.target.id.slice(2);const v=parseFloat(String(e.target.value).replace(',','.'));cv[ct][id]=isFinite(v)&&v>=0?v:0;renderCalc(0)});
 renderCalc(1);
 
-/* ---------- construtora ---------- */
-$('track').innerHTML=steps.map(s=>`<article class="st"><svg viewBox="0 0 260 92" aria-hidden="true">${s.s}</svg><h3 style="font-size:24px;font-stretch:112%;font-weight:900">${esc(s.n)}</h3><p>${esc(s.d)}</p></article>`).join('');
-const go=d=>{const tr=$('track'),w=tr.querySelector('.st').offsetWidth+14;tr.scrollBy({left:d*w,behavior:reduce?'auto':'smooth'})};
-$('prv').onclick=()=>go(-1);$('nxt').onclick=()=>go(1);
-$('track').addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();go(1)}if(e.key==='ArrowLeft'){e.preventDefault();go(-1)}});
+/* ---------- construtora: monte sua obra ---------- */
+const PL={t:0,area:90,ter:'Sim',pro:'Ainda não',ini:'Em até 3 meses'};
+const segOpts={pTer:['Sim','Ainda não'],pPro:['Sim','Ainda não','Preciso de ajuda'],pIni:['O quanto antes','Em até 3 meses','Em até 6 meses','Só pesquisando']};
+const segKey={pTer:'ter',pPro:'pro',pIni:'ini'};
+$('pTipo').innerHTML=tipos.map((t,i)=>`<button type="button" data-i="${i}">${t.ic}<b>${esc(t.n)}</b><small>${esc(t.s)}</small></button>`).join('');
+Object.keys(segOpts).forEach(id=>{$(id).innerHTML=segOpts[id].map(o=>`<button type="button" data-v="${esc(o)}">${esc(o)}</button>`).join('');$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(b){PL[segKey[id]]=b.dataset.v;renderPlan()}})});
+function setTipo(i){PL.t=i;const T=tipos[i],r=$('pArea');r.min=T.min;r.max=T.max;r.step=T.step;PL.area=Math.min(T.max,Math.max(T.min,T.def));r.value=PL.area;renderPlan()}
+$('pTipo').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setTipo(+b.dataset.i)});
+$('pArea').addEventListener('input',e=>{PL.area=+e.target.value;renderPlan()});
+['pNome','pCid'].forEach(id=>$(id).addEventListener('input',renderPlan));
+function planSvg(){
+  const T=tipos[PL.t],W=320,H=170,k=Math.sqrt(PL.area/T.max);
+  if(T.k==='calcada'){const len=40+250*Math.min(1,PL.area/T.max),x=(W-len)/2;let g=`<rect x="${x}" y="70" width="${len}" height="34" fill="#d9d2c4" stroke="#2b2622" stroke-width="2"/>`;for(let i=x+14;i<x+len;i+=14)g+=`<path d="M${i} 70v34" stroke="#b5ab9a"/>`;g+=`<path d="M${x} 112h${len}" stroke="#c2452a" stroke-width="2"/><text x="${W/2}" y="132" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="800" font-size="13" fill="#2b2622">${fmt(PL.area)} m² de calçada</text>`;return g}
+  const side=60+100*k,w=side*1.35,h=side*.8,x=(W-w)/2,y=(H-h)/2-6,m=Math.sqrt(PL.area);
+  let g='';
+  if(T.k==='amplia'){const ew=150,eh=90,ex=(W-ew-w*.6)/2,ey=(H-eh)/2-6;g+=`<rect x="${ex}" y="${ey}" width="${ew}" height="${eh}" fill="#e7e0d3" stroke="#8b857a" stroke-width="3"/><text x="${ex+ew/2}" y="${ey+eh/2+4}" text-anchor="middle" font-family="Archivo,sans-serif" font-size="12" fill="#6b6157">casa atual</text>`;const nw=Math.max(24,w*.6*k*1.4),nh=eh;g+=`<rect x="${ex+ew}" y="${ey}" width="${nw}" height="${nh}" fill="url(#hatch)" stroke="#c2452a" stroke-width="3"/><text x="${ex+ew+nw/2}" y="${ey+nh+16}" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="800" font-size="13" fill="#c2452a">+${fmt(PL.area)} m²</text>`;return hatch()+g}
+  g+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#fffdf8" stroke="#2b2622" stroke-width="4"/>`;
+  g+=`<path d="M${x+w*.58} ${y}v${h*.62}M${x} ${y+h*.5}h${w*.58}M${x+w*.58} ${y+h*.62}h${w*.42}" stroke="#2b2622" stroke-width="2.5"/>`;
+  g+=`<path d="M${x+w*.2} ${y+h}h18" stroke="#fffdf8" stroke-width="5"/><path d="M${x+w*.2} ${y+h}a18 18 0 0 1 18 -18" fill="none" stroke="#8b857a"/>`;
+  if(T.k==='reforma'){const f=Math.min(1,PL.area/T.max)*.9+.1;g+=`<rect x="${x+w*.58+2}" y="${y+2}" width="${(w*.42-4)}" height="${(h*.62-4)*f}" fill="url(#hatch)"/><text x="${W/2}" y="${y+h+18}" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="800" font-size="13" fill="#c2452a">reforma de ${fmt(PL.area)} m²</text>`;return hatch()+g}
+  g+=`<path d="M${x} ${y-10}h${w}M${x} ${y-14}v8M${x+w} ${y-14}v8" stroke="#c2452a" stroke-width="2"/><text x="${x+w/2}" y="${y-15}" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="800" font-size="12" fill="#2b2622">≈ ${fmt(m*1.3)} m</text><text x="${W/2}" y="${y+h+18}" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="800" font-size="13" fill="#2b2622">${fmt(PL.area)} m² de casa</text>`;
+  return g;
+}
+const hatch=()=>'<defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#f6dcd3"/><path d="M0 0v8" stroke="#c2452a" stroke-width="3"/></pattern></defs>';
+function renderPlan(){
+  const T=tipos[PL.t],nm=$('pNome').value.trim(),cd=$('pCid').value.trim();
+  $('pTipo').querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-pressed',i===PL.t));
+  Object.keys(segOpts).forEach(id=>$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===PL[segKey[id]])));
+  $('pAreaL').textContent=T.al;$('pAreaO').textContent=fmt(PL.area)+' m²';
+  $('pPlan').innerHTML=planSvg();
+  const rows=[['Obra',T.n],[T.al,fmt(PL.area)+' m²'],['Terreno',PL.ter],['Projeto',PL.pro],['Início',PL.ini]];if(cd)rows.push(['Cidade',cd]);if(nm)rows.push(['Cliente',nm]);
+  $('pDl').innerHTML=rows.map(r=>`<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join('');
+  let t='Olá, Construbem! Quero conversar com a construtora:\n'+rows.map(r=>'• '+r[0]+': '+r[1]).join('\n');
+  $('pWa').href=wa(t);
+}
+setTipo(0);
+/* como funciona */
+let fs=0;
+function renderFlow(){$('flow').innerHTML=steps.map((s,i)=>`<button type="button" data-i="${i}" aria-current="${i===fs}" class="${i<fs?'done':''}">${i===0?'<span class="here">Você começa aqui</span>':''}<h3>${esc(s.n)}</h3><p>${esc(s.d)}</p></button>`).join('')}
+$('flow').addEventListener('click',e=>{const b=e.target.closest('button');if(b){fs=+b.dataset.i;renderFlow()}});
+renderFlow();
+$('svc').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.t){setTipo(+b.dataset.t);$('plan').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}else if(b.dataset.go)location.hash=b.dataset.go;else if(b.dataset.add)add(b.dataset.add)});
 
 /* ---------- chat ---------- */
 $('qs').innerHTML=faq.map((f,i)=>`<button data-i="${i}">${esc(f[0])}</button>`).join('');
@@ -178,16 +240,21 @@ $('qs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b
 /* ---------- contato ---------- */
 $('cpAddr').onclick=async()=>{try{await navigator.clipboard.writeText('Av. Dom Pedro II, 740, Centro, Serra Alta/SC, 89871-000');toast('Endereço copiado')}catch(e){toast('Av. Dom Pedro II, 740, Centro')}};
 
-/* ---------- trena de progresso ---------- */
+/* ---------- navegador lateral ---------- */
 const secs=[...document.querySelectorAll('[data-trena]')];
-const rail=$('rail');
-secs.forEach(s=>{const a=document.createElement('a');a.href='#'+s.id;a.title=s.dataset.trena;a.setAttribute('aria-label',s.dataset.trena);rail.appendChild(a)});
+$('railOl').insertAdjacentHTML('beforeend',secs.map((s,i)=>`<li><button data-i="${i}" aria-label="Ir para ${esc(s.dataset.trena)}"><i></i><span>${esc(s.dataset.trena)}</span></button></li>`).join(''));
+const rbtn=[...$('railOl').querySelectorAll('button')];
+rbtn.forEach((b,i)=>b.onclick=()=>secs[i].scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}));
+let curI=-1;
 function onScroll(){
   const max=document.documentElement.scrollHeight-innerHeight,p=max>0?Math.min(1,scrollY/max):0;
   $('tapeFill').style.width=(p*100)+'%';
-  const rh=rail.clientHeight;$('railM').style.top=(p*rh)+'px';$('railL').style.top=(p*rh)+'px';
-  let cur=secs[0];secs.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.45)cur=s});$('railL').textContent=cur.dataset.trena;
-  const H=document.documentElement.scrollHeight;rail.querySelectorAll('a').forEach((a,i)=>a.style.top=(secs[i].offsetTop/H*rh)+'px');
+  let ci=0;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<innerHeight*.45)ci=i});
+  const ni=secs[ci+1],a=secs[ci].getBoundingClientRect().top,b=ni?ni.getBoundingClientRect().top:a+secs[ci].offsetHeight,f=Math.max(0,Math.min(1,(innerHeight*.45-a)/(b-a||1)));
+  const b0=rbtn[ci],b1=rbtn[ci+1]||b0,y0=b0.offsetTop+14,y1=b1.offsetTop+14;
+  $('railF').style.height=Math.max(0,y0-14+(y1-y0)*f)+'px';
+  $('railL').textContent=Math.round(p*100)+'%';
+  if(ci!==curI){rbtn.forEach((b,i)=>{b.setAttribute('aria-current',i===ci);b.classList.toggle('past',i<ci)});rbtn.forEach(b=>b.classList.remove('flash'));const cb=rbtn[ci];cb.classList.add('flash');clearTimeout(onScroll.t);onScroll.t=setTimeout(()=>cb.classList.remove('flash'),1400);curI=ci}
 }
 addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
 }
